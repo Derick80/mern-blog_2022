@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+// schema.prisma
+
+model Post {
+  id        Int     @default(autoincrement()) @id
+  title     String
+  content   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  published Boolean @default(false)
+  author    User?   @relation(fields: [authorId], references: [id])
+  authorId  Int?
+  comments Comment[] 
+  categories Category[] @relation(references: [id])
+ 
+  views     Int     @default(0)
+  likes     Int     @default(0)
+  
+}
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String
+  posts Post[] @relation(references: [id])
+}
+
+model Comment {
+  id      Int    @id @default(autoincrement())
+  content String
+    createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  Post   Post? @relation(fields: [postId], references: [id]) // A comment can have one post
+  postId Int?
+}
+
+
+model User {
+  id            Int       @default(autoincrement()) @id
+  firstName String?
+  lastName String?
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map(name: "email_verified")
+  image         String?
+   profileViews Int              @default(0)
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  posts         Post[]
+  profile       Profile?
+
+  @@map(name: "users")
+}
+
+model Account {
+  id                 Int       @default(autoincrement()) @id
+  compoundId         String    @unique @map(name: "compound_id")
+  userId             Int       @map(name: "user_id")
+  providerType       String    @map(name: "provider_type")
+  providerId         String    @map(name: "provider_id")
+  providerAccountId  String    @map(name: "provider_account_id")
+  refreshToken       String?   @map(name: "refresh_token")
+  accessToken        String?   @map(name: "access_token")
+  accessTokenExpires DateTime? @map(name: "access_token_expires")
+  createdAt          DateTime  @default(now()) @map(name: "created_at")
+  updatedAt          DateTime  @default(now()) @map(name: "updated_at")
+
+  @@index([providerAccountId], name: "providerAccountId")
+  @@index([providerId], name: "providerId")
+  @@index([userId], name: "userId")
+
+  @@map(name: "accounts")
+}
+
+model Session {
+  id           Int      @default(autoincrement()) @id
+  userId       Int      @map(name: "user_id")
+  expires      DateTime
+  sessionToken String   @unique @map(name: "session_token")
+  accessToken  String   @unique @map(name: "access_token")
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+
+  @@map(name: "sessions")
+}
+
+model Profile {
+  id        Int     @id @default(autoincrement())
+  nickname  String
+  city         String
+  country      String
+  bio String
+  user   User    @relation(fields: [userId], references: [id])
+   userId Int     @unique
+}
+
+
+model Word {
+id        Int      @id @default(autoincrement())
+word String
+  }
