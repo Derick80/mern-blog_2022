@@ -1,8 +1,5 @@
 import { GetServerSideProps } from 'next'
 import { useSession, getSession } from 'next-auth/client'
-import UserProfilePage, {
-  UserProfilePageProps,
-} from '../../components/UserProfilePage'
 import prisma from '../../utils/prisma'
 import Layout from '../../components/Layout'
 import React from 'react'
