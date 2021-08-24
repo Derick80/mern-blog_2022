@@ -1,9 +1,9 @@
 import React from 'react'
 import { GetServerSideProps } from 'next'
-import Layout from '../../../../components/Layout'
-import Post from '../../../../components/Post'
+import Layout from '../../../components/Layout'
+import Post from '../../../components/Post'
 import { useSession, getSession } from 'next-auth/client'
-import prisma from '../../../../utils/prisma'
+import prisma from '../../../utils/prisma'
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req })
@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
   })
   return {
-    props: { drafts },
+    props: { drafts: JSON.parse(JSON.stringify(drafts)) },
   }
 }
 
@@ -45,17 +45,14 @@ const Drafts: React.FC<Props> = (props) => {
   }
 
   return (
-    <div>
-      <div className='page'>
-        <h1>My Drafts</h1>
-        <main>
-          {props.drafts.map((post) => (
-            <div key={post.id} className='post'>
-              <Post post={post} />
-            </div>
-          ))}
-        </main>
-      </div>
+    <div className='page'>
+      <h1>My Drafts</h1>
+
+      {props.drafts.map((post) => (
+        <div key={post.id} className='post'>
+          <Post post={post} />
+        </div>
+      ))}
     </div>
   )
 }

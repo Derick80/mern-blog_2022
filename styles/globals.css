@@ -31,6 +31,7 @@ body {
 /* #7090BA #495F7A , #96C1FA  232D3B #87AEE0 */
 .App {
   display: flex;
+  height: 100%;
   flex-direction: column;
   margin: 0 auto;
   background: #5f7994;
@@ -41,6 +42,7 @@ body {
 .main {
   padding: 5rem 0;
   flex: 1;
+
   display: flex;
   flex-direction: column;
   justify-content: center;

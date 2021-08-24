@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Layout from '../../../../components/Layout'
+import Layout from '../../../components/Layout'
 import Router from 'next/router'
 
 const Draft: React.FC = () => {
@@ -10,12 +10,12 @@ const Draft: React.FC = () => {
     e.preventDefault()
     try {
       const body = { title, content }
-      await fetch(`http://localhost:8077/api/post/create`, {
+      await fetch(`http://localhost:8077/api/post`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       })
-      await Router.push('/api/post/drafts')
+      await Router.push('/post/drafts')
     } catch (error) {
       console.error(error)
     }

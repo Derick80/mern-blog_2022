@@ -26,6 +26,9 @@ type PostProps = {
   categories: []
   views: number
   likes: number
+  createdAt: object | null
+
+  updatedAt: object | null
 }
 
 type CategoryProps = {

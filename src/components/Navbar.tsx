@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
         <Link href='/post/create' passHref>
           <a data-active={isActive('/')}>New Post</a>
         </Link>
-        <Link href='/drafts'>
+        <Link href='/post/drafts'>
           <a data-active={isActive('/post/drafts')}>My drafts</a>
         </Link>
         <Link href='/profile'>

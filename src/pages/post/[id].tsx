@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     },
   })
   return {
-    props: { post },
+    props: { post: JSON.parse(JSON.stringify(post)) },
   }
 }
 
@@ -34,32 +34,34 @@ async function deletePost(id: number): Promise<void> {
   })
   await Router.push('/')
 }
+type Props = {
+  post: PostProps
+}
+const Post: React.FC<Props> = (props) => {
+  console.log(props)
 
-const Post: React.FC<PostProps> = (props) => {
   const [session, loading] = useSession()
   if (loading) {
     return <div>Authenticating ...</div>
   }
   const userHasValidSession = Boolean(session)
-  const postBelongsToUser = session?.user?.email === props.author?.email
-  let title = props.title
-  if (!props.published) {
+  const postBelongsToUser = session?.user?.email === props.post.author?.email
+  let title = props.post.title
+  if (!props.post.published) {
     title = `${title} (Draft)`
   }
 
   return (
     <div>
-      <div>
-        <h2>{title}</h2>
-        <p>By {props?.author?.name || 'Unknown author'}</p>
-        <p>{props.content}</p>
-        {!props.published && userHasValidSession && postBelongsToUser && (
-          <button onClick={() => publishPost(props.id)}>Publish</button>
-        )}
-        {userHasValidSession && postBelongsToUser && (
-          <button onClick={() => deletePost(props.id)}>Delete</button>
-        )}
-      </div>
+      <h2>{title}</h2>
+      <p>By {props?.post.author?.name || 'Unknown author'}</p>
+      <p>{props.post.content}</p>
+      {!props.post.published && userHasValidSession && postBelongsToUser && (
+        <button onClick={() => publishPost(props.post.id)}>Publish</button>
+      )}
+      {userHasValidSession && postBelongsToUser && (
+        <button onClick={() => deletePost(props.post.id)}>Delete</button>
+      )}
     </div>
   )
 }
