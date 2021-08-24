@@ -7,5 +7,37 @@ type UserProfilePageProps = {
   user: {
     name: string
     email: string
+    image: string
   } | null
+}
+
+type PostProps = {
+  id: number
+  title: string
+  author: {
+    name: string
+    email: string
+    image: string
+  } | null
+  authorId: number
+  content: string
+  published: boolean
+  coments: []
+  categories: []
+  views: number
+  likes: number
+}
+
+type CategoryProps = {
+  id: number
+  name: string
+
+  post: {
+    id: number
+  }
+}
+
+interface moreJSX extends IntrinsicElements {
+  nav_right: any
+  nav_left: any
 }

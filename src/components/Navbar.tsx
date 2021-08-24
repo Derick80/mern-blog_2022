@@ -1,75 +1,94 @@
-/* eslint-disable @next/next/no-img-element */
+import React from 'react'
 import Link from 'next/link'
-import { signIn, signOut, useSession } from 'next-auth/client'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
-function Navbar() {
+import { signOut, useSession } from 'next-auth/client'
+
+const Navbar: React.FC = () => {
   const router = useRouter()
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname
+
   const [session, loading] = useSession()
 
-  return (
-    <header>
-      <noscript>
-        <style>{`.nojs-show { opacity: 1; top: 0; }`}</style>
-      </noscript>
-      <nav className='navbar'>
-        <div className='nav-links'>
-          <Link href='/'>
-            <a className='a'>Home</a>
-          </Link>
-        </div>
-        <p className={`nojs-show ${!session && loading}`}>
-          {!session && (
-            <>
-              <span>You are not signed in</span>
-              <a
-                className='a'
-                href={`/api/auth/signin`}
-                onClick={(e) => {
-                  e.preventDefault()
-                  signIn()
-                }}
-              >
-                Sign in
-              </a>
-            </>
-          )}
-          {session && (
-            <>
-              <Link href='/profile/create'>
-                <a data-active={isActive('/profile/create')}>
-                  Create a Profile
-                </a>
-              </Link>
-              <Link href='/profile'>
-                <a data-active={isActive('/profile')}>Profile</a>
-              </Link>
-              {session.user.image && (
-                <span
-                  style={{ backgroundImage: `url(${session.user.image})` }}
-                />
-              )}
-              <span>
-                <small>Signed in as</small>
-                <br />
-                <strong>{session.user.email || session.user.name}</strong>
-              </span>
-              <a
-                className='a'
-                href={`/api/auth/signout`}
-                onClick={(e) => {
-                  e.preventDefault()
-                  signOut()
-                }}
-              >
-                Sign out
-              </a>
-            </>
-          )}
+  let left = (
+    <div className='nav_left'>
+      <Link href='/'>
+        <a data-active={isActive('/')}>Feed</a>
+      </Link>
+    </div>
+  )
+
+  let right = null
+
+  if (loading) {
+    left = (
+      <div className='nav_left'>
+        <Link href='/'>
+          <a data-active={isActive('/')}>Main Feed</a>
+        </Link>
+      </div>
+    )
+    right = (
+      <div className='nav_right'>
+        <p>Validating session ...</p>
+      </div>
+    )
+  }
+
+  if (!session) {
+    right = (
+      <div className='nav_right'>
+        <Link href='/api/auth/signin'>
+          <a data-active={isActive('/signup')}>Log in</a>
+        </Link>
+      </div>
+    )
+  }
+
+  if (session) {
+    left = (
+      <div className='nav_left'>
+        <Link href='/'>
+          <a data-active={isActive('/')}>Feed</a>
+        </Link>
+        <Link href='/post/create' passHref>
+          <a data-active={isActive('/')}>New Post</a>
+        </Link>
+        <Link href='/drafts'>
+          <a data-active={isActive('/post/drafts')}>My drafts</a>
+        </Link>
+        <Link href='/profile'>
+          <a data-active={isActive('/profile')}>Profile</a>
+        </Link>
+      </div>
+    )
+    right = (
+      <div className='nav_right'>
+        <p>
+          {session.user.name} ({session.user.email})
         </p>
-      </nav>
-    </header>
+        {session.user.image && (
+          <Image
+            className='navbar-image'
+            src={session.user.image}
+            alt='myimage'
+            width='80'
+            height='80'
+          />
+        )}
+        <button onClick={() => signOut()}>
+          <a>Log out</a>
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <nav className='navbar'>
+      {left}
+      {right}
+    </nav>
   )
 }
 

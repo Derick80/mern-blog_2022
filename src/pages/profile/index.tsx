@@ -1,11 +1,10 @@
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, NextApiRequest, NextApiResponse } from 'next'
 import { useSession, getSession } from 'next-auth/client'
 import prisma from '../../utils/prisma'
-import Layout from '../../components/Layout'
-import React from 'react'
+import Image from 'next/image'
 export const getServerSideProps: GetServerSideProps = async (
-  req: any,
-  res: any
+  req: NextApiRequest,
+  res: NextApiResponse
 ) => {
   const session = await getSession({ req })
   //   if (!session) {
@@ -36,10 +35,10 @@ const useProfile: React.FC<Props> = (props) => {
   let items = props.data
   if (!session) {
     return (
-      <Layout>
+      <div>
         <h1>My Profile</h1>
         <div>You need to be authenticated to view this page.</div>
-      </Layout>
+      </div>
     )
   }
 
@@ -55,22 +54,17 @@ const useProfile: React.FC<Props> = (props) => {
 
             <p className=''>{items.bio} </p>
           </div>
+          {session.user.image && (
+            <Image
+              className='navbar-image'
+              src={session.user.image}
+              alt='myimage'
+              width='60'
+              height='60'
+            />
+          )}
         </main>
       </div>
-      <style jsx>{`
-        .post {
-          background: white;
-          transition: box-shadow 0.1s ease-in;
-        }
-
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-      `}</style>
     </div>
   )
 }

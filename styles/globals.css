@@ -30,43 +30,117 @@ body {
 }
 /* #7090BA #495F7A , #96C1FA  232D3B #87AEE0 */
 .App {
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
   background: #5f7994;
 }
-/* Places Container */
-
-.public-container {
-  grid-column-start: 2;
-  grid-column-end: 10;
-  width: 100%;
-  height: 80vh;
+.App > * {
+  flex: 1 100%;
+}
+.main {
+  padding: 5rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.sidebar-container {
-  position: fixed;
+/* We rely on source order for mobile-first approach
+ * in this case:
+ * 1. header
+ * 2. article
+ * 3. aside 1
+ * 4. aside 2
+ * 5. footer
+ */
 
-  left: 0;
-  width: 200px;
-  transition: 0.5s;
-  transition-property: left;
-  height: 100%;
+/* Medium screens */
+@media all and (min-width: 600px) {
+  /* We tell both sidebars to share a row */
+  .aside {
+    flex: 1 auto;
+  }
+}
 
+/* Large screens */
+@media all and (min-width: 800px) {
+  /* We invert order of first sidebar and main
+   * And tell the main element to take twice as much width as the other two sidebars 
+   */
+  .main {
+    flex: 2 0px;
+  }
+  .aside-1 {
+    order: 1;
+  }
+  .main {
+    order: 2;
+  }
+  .aside-2 {
+    order: 3;
+  }
+  .footer {
+    order: 4;
+  }
+}
+
+.navbar {
+  display: flex;
+  height: 20vh;
+  align-items: center;
   background: #374757;
   color: white;
 }
-
-.sidebar-container a:hover {
-  background: white;
+.nav_left {
+  display: inline-block;
 }
-.content-container {
-  margin-left: 200px;
+.nav_right {
+  display: inline-block;
+  margin-left: auto;
+}
+.nav-links {
+  display: inline-block;
+  list-style: none;
+  text-decoration: none;
+  color: white;
+}
+.navbar a {
+  padding: 10px;
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+}
+.navbar p {
+  display: inline-block;
+}
+.navbar-image {
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+}
 
-  background-position: center;
-  background-size: cover;
+button:hover {
+  transform: scale(0.98);
+}
+.footer {
+  width: 100%;
+  height: 100px;
+  border-top: 1px solid #eaeaea;
+  background-color: #7090ba;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* .container {
+  min-height: 100vh;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
-}
+} */
 
 h1,
 title {
@@ -103,34 +177,13 @@ h2 {
 }
 
 p {
+  font-size: 16;
+
   margin: 16px 0;
 }
 
 img {
   width: 100%;
-}
-.navbar {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  min-height: 10vh;
-  background: #374757;
-  color: white;
-}
-
-.nav-links {
-  display: flex;
-  width: 50%;
-  justify-content: space-around;
-  align-items: center;
-  list-style: none;
-  text-decoration: none;
-  color: white;
-}
-a {
-  padding: 10px;
-  text-decoration: none;
-  color: white;
 }
 
 a:hover {
@@ -143,38 +196,15 @@ a:visited {
   color: white;
 }
 
-.button {
+button {
   display: inline-block;
   padding: 10px 30px;
   cursor: pointer;
   background: rgba(99, 169, 207, 1);
-  color: white;
   border: none;
   border-radius: 5px;
-}
-.button:hover {
-  transform: scale(0.98);
-}
-.sidebar-button {
-  display: inline-block;
-  padding: 10px 30px;
-  cursor: pointer;
-  background: rgba(99, 169, 207, 1);
-  color: white;
-  border: none;
-  border-radius: 5px;
-}
-.user-status-container {
-  border: #232d3b;
-  border-radius: 5px;
-  font-size: 16px;
-  display: inline-flexbox;
-  position: fixed;
-  bottom: 0;
 }
 
-.progress-bar {
-  height: 5px;
-  background-color: var(--primary);
-  margin-top: 20px;
+button:hover {
+  transform: scale(0.98);
 }
