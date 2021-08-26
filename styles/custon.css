@@ -1,19 +1,3 @@
-/* html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-} */
 /* librarys
 #918676
 #524B42
@@ -52,12 +36,25 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+/* body {
+  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+} */
 /* #7090BA #495F7A , #96C1FA  232D3B #87AEE0 */
-
-.main {
-  flex: 1;
-  /* display: flex; */
+.App {
+  min-height: 100vh;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  margin: 0 auto;
   background: #5f7994;
+}
+.main {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -65,6 +62,7 @@ body {
 
 .navbar {
   display: flex;
+  height: 20vh;
   align-items: center;
   background: #374757;
   color: white;
@@ -101,6 +99,20 @@ body {
 button:hover {
   transform: scale(0.98);
 }
+.footer {
+  position: absolute;
+
+  bottom: 0;
+}
+/* .container {
+  min-height: 100vh;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+} */
 form {
   width: 50%;
 }
@@ -173,17 +185,4 @@ button {
 
 button:hover {
   transform: scale(0.98);
-}
-.card {
-  background-color: #7090ba;
-  width: 300px;
-  border-radius: 5px;
-  padding: 10px 20px;
-}
-.card-cardtitle {
-  font-size: 18px;
-  font-weight: bold;
-}
-.card-content {
-  font-size: 14px;
 }

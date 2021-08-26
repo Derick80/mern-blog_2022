@@ -1,8 +1,8 @@
 import React from 'react'
 import { GetStaticProps } from 'next'
-import Layout from '../components/Layout'
-import Post from '../components/Post'
+
 import prisma from '../utils/prisma'
+import PostCard from '../components/CardPost'
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
@@ -28,15 +28,14 @@ type Props = {
 
 const Blog: React.FC<Props> = (props) => {
   return (
-    <div className='page'>
-      <h1>Public Feed</h1>
-
-      {props.feed.map((post) => (
-        <div key={post.id} className='post'>
-          <Post post={post} />
-        </div>
-      ))}
-    </div>
+    <>
+      <div className='container'>
+        <h3>Public Feed</h3>{' '}
+        {props.feed.map((post) => (
+          <PostCard key={post.id} post={post} />
+        ))}
+      </div>
+    </>
   )
 }
 

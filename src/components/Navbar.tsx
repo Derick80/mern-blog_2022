@@ -65,9 +65,6 @@ const Navbar: React.FC = () => {
     )
     right = (
       <div className='nav_right'>
-        <p>
-          {session.user.name} ({session.user.email})
-        </p>
         {session.user.image && (
           <Image
             className='navbar-image'
@@ -77,6 +74,10 @@ const Navbar: React.FC = () => {
             height='80'
           />
         )}
+
+        <p>
+          {session.user.name} ({session.user.email})
+        </p>
         <button onClick={() => signOut()}>
           <a>Log out</a>
         </button>

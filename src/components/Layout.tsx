@@ -1,17 +1,19 @@
 import React, { ReactNode } from 'react'
-import Footer from './Footer'
+
 import Navbar from './Navbar'
 
 type Props = {
   children: ReactNode
 }
 
-const Layout: React.FC<Props> = (props) => (
-  <div className='App'>
-    <Navbar />
-    <div className='main'>{props.children}</div>
-    <Footer />
-  </div>
-)
+export const Layout: React.FC<Props> = ({ children }) => {
+  return (
+    <div className='wrapper'>
+      <Navbar />
+
+      <div className='main'>{children}</div>
+    </div>
+  )
+}
 
 export default Layout
