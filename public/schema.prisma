@@ -40,6 +40,8 @@ model Comment {
   updatedAt DateTime @default(now())
   Post   Post? @relation(fields: [postId], references: [id]) // A comment can have one post
   postId Int?
+  commentAuthor    User?   @relation(fields: [commentAuthorId], references: [id])
+  commentAuthorId  Int?
 }
 
 
@@ -56,6 +58,7 @@ model User {
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   posts         Post[]
   profile       Profile?
+  comments Comment[] 
 
   @@map(name: "users")
 }

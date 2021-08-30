@@ -6,19 +6,6 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Router from 'next/router'
 
-const useStyles = makeStyles({
-  root: {
-    minWidth: 275,
-  },
-  title: {
-    bold: true,
-    fontSize: 16,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-})
-
 const PostCard: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : 'Unknown author'
 
