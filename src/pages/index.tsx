@@ -1,6 +1,5 @@
 import React from 'react'
 import { GetStaticProps } from 'next'
-
 import prisma from '../utils/prisma'
 import PostCard from '../components/CardPost'
 
@@ -10,6 +9,7 @@ export const getStaticProps: GetStaticProps = async () => {
       published: true,
     },
     include: {
+      comments: true,
       author: {
         select: {
           name: true,

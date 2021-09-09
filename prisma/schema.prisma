@@ -10,41 +10,6 @@ generator client {
   provider = "prisma-client-js"
 }
 // schema.prisma
-
-model Post {
-  id        Int     @default(autoincrement()) @id
-  title     String
-  content   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  Int?
-  comments Comment[] 
-  categories Category[] @relation(references: [id])
- 
-  views     Int     @default(0)
-  likes     Int     @default(0)
-  
-}
-model Category {
-  id    Int    @id @default(autoincrement())
-  name  String
-  posts Post[] @relation(references: [id])
-}
-
-model Comment {
-  id      Int    @id @default(autoincrement())
-  content String
-    createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  Post   Post? @relation(fields: [postId], references: [id]) // A comment can have one post
-  postId Int?
-  commentAuthor    User?   @relation(fields: [commentAuthorId], references: [id])
-  commentAuthorId  Int?
-}
-
-
 model User {
   id            Int       @default(autoincrement()) @id
   firstName String?
@@ -54,14 +19,54 @@ model User {
   emailVerified DateTime? @map(name: "email_verified")
   image         String?
    profileViews Int              @default(0)
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  likedPosts Post[] @relation("likedPosts")
+  likedComments Comment[] @relation("likedComments")
   posts         Post[]
   profile       Profile?
   comments Comment[] 
-
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   @@map(name: "users")
 }
+model Post {
+  id        Int     @default(autoincrement()) @id
+  title     String
+  content   String?
+  author    User?   @relation(fields: [authorId], references: [id])
+  authorId  Int?
+  categories Category[] @relation(references: [id])
+  likedByUsers User[]    @relation("likedPosts")
+  views     Int     @default(0)
+  likes     Int     @default(0)
+  comments Comment[] 
+  userLiked Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  published Boolean @default(false)
+}
+
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String
+  posts Post[] @relation(references: [id])  
+}
+
+model Comment {
+  id      Int    @id @default(autoincrement())
+  content String
+  post   Post? @relation(fields: [postId], references: [id]) // A comment can have one post
+  likedByUsers User[] @relation("likedComments")
+  likes Int @default(0)
+  author    User?   @relation(fields: [authorId], references: [id])
+  authorId  Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  postId Int?
+}
+
+
+
 
 model Account {
   id                 Int       @default(autoincrement()) @id

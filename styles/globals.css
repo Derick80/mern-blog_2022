@@ -193,3 +193,17 @@ button:hover {
   text-align: right;
   font-size: 10px;
 }
+.card-stats-actions {
+  text-align: right;
+  font-size: 10px;
+}
+.owner-card-actions {
+  text-align: right;
+  font-size: 10px;
+}
+.create-form {
+  font-size: 16px;
+}
+.create-comment {
+  max-width: 300px;
+}

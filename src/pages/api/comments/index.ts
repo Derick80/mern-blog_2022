@@ -10,12 +10,19 @@ export default async function handle(
   res: NextApiResponse
 ) {
   const { content } = req.body
-
   const session = await getSession({ req })
-  const result = await prisma.comment.create({
-    data: {
-      content: content,
-    },
-  })
-  res.json(result)
+  const postId = Number(req.query.id)
+  if (req.method === 'POST') {
+    const comment = await prisma.comment.create({
+      data: {
+        content: content,
+        author: { connect: { email: session?.user?.email } },
+      },
+    })
+    res.json(comment)
+  } else {
+    throw new Error(
+      `The HTTP ${req.method} method is not supported at this route.`
+    )
+  }
 }

@@ -27,13 +27,19 @@ async function publishPost(id: number): Promise<void> {
   })
   await Router.push('/')
 }
-
+async function editPost(id: number): Promise<void> {
+  await fetch(`http://localhost:8077/api/post/edit/${id}`, {
+    method: 'PUT',
+  })
+  await Router.push('/')
+}
 async function deletePost(id: number): Promise<void> {
   await fetch(`http://localhost:8077/api/post/${id}`, {
     method: 'DELETE',
   })
   await Router.push('/')
 }
+
 type Props = {
   post: PostProps
 }
@@ -60,7 +66,12 @@ const Post: React.FC<Props> = (props) => {
         <button onClick={() => publishPost(props.post.id)}>Publish</button>
       )}
       {userHasValidSession && postBelongsToUser && (
-        <button onClick={() => deletePost(props.post.id)}>Delete</button>
+        <div>
+          {' '}
+          <button onClick={() => editPost(props.post.id)}>Edit</button>
+          <br />
+          <button onClick={() => deletePost(props.post.id)}>Delete</button>
+        </div>
       )}
     </div>
   )

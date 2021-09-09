@@ -1,3 +1,19 @@
+/* html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+} */
 /* librarys
 #918676
 #524B42
@@ -36,25 +52,10 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-/* body {
-  font-family: 'Open Sans', sans-serif;
-  font-family: 'Roboto', sans-serif;
-  line-height: 1.6;
-  font-size: 16px;
-  font-family: 'Poppins', sans-serif;
-  min-height: 100vh;
-} */
 /* #7090BA #495F7A , #96C1FA  232D3B #87AEE0 */
-.App {
-  min-height: 100vh;
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  margin: 0 auto;
-  background: #5f7994;
-}
+
 .main {
-  display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -62,10 +63,9 @@ body {
 
 .navbar {
   display: flex;
-  height: 20vh;
   align-items: center;
-  background: #374757;
-  color: white;
+
+  color: black;
 }
 .nav_left {
   display: inline-block;
@@ -79,13 +79,13 @@ body {
   display: inline-block;
   list-style: none;
   text-decoration: none;
-  color: white;
+  color: black;
 }
 .navbar a {
   padding: 10px;
   display: inline-block;
   text-decoration: none;
-  color: white;
+  color: black;
 }
 .navbar p {
   display: inline-block;
@@ -99,20 +99,6 @@ body {
 button:hover {
   transform: scale(0.98);
 }
-.footer {
-  position: absolute;
-
-  bottom: 0;
-}
-/* .container {
-  min-height: 100vh;
-  padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-} */
 form {
   width: 50%;
 }
@@ -173,7 +159,7 @@ a:link,
 a:active,
 a:visited {
   text-decoration: none;
-  color: white;
+  color: black;
 }
 
 button {
@@ -185,4 +171,39 @@ button {
 
 button:hover {
   transform: scale(0.98);
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+  max-width: 300px;
+  margin: auto;
+  border-radius: 5px;
+  padding: 2px 16px;
+}
+.card-cardtitle {
+  text-align: center;
+
+  font-size: 18px;
+  font-weight: bold;
+}
+.card-content {
+  font-size: 14px;
+}
+.card-author {
+  text-align: right;
+  font-size: 10px;
+}
+.card-stats-actions {
+  text-align: right;
+  font-size: 10px;
+}
+.owner-card-actions {
+  text-align: right;
+  font-size: 10px;
+}
+.create-form {
+  font-size: 16px;
+}
+.create-comment {
+  max-width: 300px;
 }

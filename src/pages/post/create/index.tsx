@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Layout from '../../../components/Layout'
 import Router from 'next/router'
 
 const Draft: React.FC = () => {
@@ -22,7 +21,7 @@ const Draft: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className='create-form'>
       <form onSubmit={submitData}>
         <h3>New Draft</h3>
         <input

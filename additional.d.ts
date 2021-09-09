@@ -22,7 +22,30 @@ type PostProps = {
   authorId: number
   content: string
   published: boolean
-  coments: []
+  comments: {
+    id: number
+    content: string
+    author: string
+  }
+  categories: []
+  views: number
+  likes: number
+  createdAt: object | null
+
+  updatedAt: object | null
+}
+type CommentProps = {
+  id: number
+  author: {
+    name: string
+    email: string
+    image: string
+  } | null
+  authorId: number
+  postId: number
+  content: string
+  published: boolean
+  comments: []
   categories: []
   views: number
   likes: number
