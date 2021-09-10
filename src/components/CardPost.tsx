@@ -2,6 +2,13 @@ import Router from 'next/router'
 import Image from 'next/image'
 import likeImage from '../../public/img/iconmonstr-heart-thin.svg'
 import Comment from '../pages/post/comment'
+async function deletePost(id: number): Promise<void> {
+  await fetch(`http://localhost:8077/api/post/${id}`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+  })
+  await Router.push('/')
+}
 async function likePost(id: number): Promise<void> {
   await fetch(`http://localhost:8077/api/like/${id}`, {
     method: 'PATCH',
@@ -24,9 +31,7 @@ const PostCard: React.FC<{ post: PostProps }> = ({ post }) => {
       </div>
 
       <div className='owner-card-actions'>
-        <button onClick={() => Router.push('/post/[id]', `/post/${post.id}`)}>
-          Edit or Delete
-        </button>
+        <button onClick={() => deletePost(post.id)}> Delete</button>
       </div>
       <Comment />
     </div>

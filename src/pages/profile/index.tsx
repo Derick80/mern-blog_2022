@@ -2,16 +2,8 @@ import { GetServerSideProps, NextApiRequest, NextApiResponse } from 'next'
 import { useSession, getSession } from 'next-auth/client'
 import prisma from '../../utils/prisma'
 import Image from 'next/image'
-export const getServerSideProps: GetServerSideProps = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req })
-  //   if (!session) {
-  //     return {
-  //       props: { data: [] },
-  //     }
-  //   }
 
   const data = await prisma.profile.findFirst({
     where: {
