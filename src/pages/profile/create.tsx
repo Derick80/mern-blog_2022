@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Layout from '../../components/Layout'
 import Router from 'next/router'
 
-const Draft: React.FC = () => {
+const CreateProfile: React.FC = () => {
   const [nickname, setNickname] = useState('')
   const [country, setCountry] = useState('')
   const [city, setCity] = useState('')
@@ -68,4 +68,4 @@ const Draft: React.FC = () => {
   )
 }
 
-export default Draft
+export default CreateProfile

@@ -1,0 +1,8 @@
+
+NEXT_PUBLIC_SUPABASE_URL=https://ojuaxdogodraxzozqxmw.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyODg5Mzg5NSwiZXhwIjoxOTQ0NDY5ODk1fQ.gtWi9yMk3LrObEjwRNchdEZcOZOXacpHiziDxgUjqn4
+
+
+DATABASE_URL=postgresql://postgres:3365966@localhost:5432/pc_app
+
+

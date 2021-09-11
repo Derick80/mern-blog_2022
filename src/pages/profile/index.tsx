@@ -1,30 +1,17 @@
 import { GetServerSideProps, NextApiRequest, NextApiResponse } from 'next'
-import { useSession, getSession } from 'next-auth/client'
-import prisma from '../../utils/prisma'
+import { useSession } from 'next-auth/client'
 import Image from 'next/image'
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const session = await getSession({ req })
+import Avatar from '../../components/Avatar'
+import {useProfile, getProfile} from '../../hooks'
 
-  const data = await prisma.profile.findFirst({
-    where: {
-      user: { email: session?.user.email },
-    },
-  })
-  return {
-    props: {
-      data,
-    },
-  }
-}
 
-type Props = {
-  data: UserProfilePageProps
-}
 
-const useProfile: React.FC<Props> = (props) => {
+const useProfile: React.FC = () => {
   const [session] = useSession()
-  console.log(props)
-  let items = props.data
+
+
+  
+  
   if (!session) {
     return (
       <div>
@@ -36,6 +23,18 @@ const useProfile: React.FC<Props> = (props) => {
 
   return (
     <div>
+      <div className="form-widget">
+    {/* Add to the body */}
+    <Avatar
+      url={avatar_url}
+      size={150}
+      onUpload={(url) => {
+        setAvatarUrl(url)
+        updateProfile({ username, website, avatar_url: url })
+      }}
+    />
+    {/* ... */}
+  </div>
       <div className='page'>
         <h1>My Profile</h1>
         <main>

@@ -1,5 +1,6 @@
 type UserProfilePageProps = {
   id: number
+  avatar_url?:string
   nickname: string
   country: string
   city: string
@@ -66,4 +67,18 @@ type CategoryProps = {
 interface moreJSX extends IntrinsicElements {
   nav_right: any
   nav_left: any
+}
+
+
+interface Profile {
+  id: number      
+  avatar_url?:string 
+  nickname:string    
+  city:string         
+  country:string      
+  bio:string
+  updatedAt: object | null
+  website: string
+  user:{}   
+   userId:number 
 }
