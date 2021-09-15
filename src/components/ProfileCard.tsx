@@ -3,7 +3,7 @@ import Image from 'next/image'
 export default function ProfileCard({ profile }: { profile: Profile }) {
     const lastUpdated = profile.updatedAt ? new Date() : null
     return (
-      <div className="profileCard">
+      <div className="w-full max-w-lg m-auto py-10 mt-10 px-10 border">
        <Image
               className="image"
               src={profile.avatar_url}

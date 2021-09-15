@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
   const [session, loading] = useSession()
 
   let left = (
-    <div className='nav_left'>
+    <div className='m-auto  left-1'>
       <Link href='/'>
         <a data-active={isActive('/')}>Feed</a>
       </Link>
@@ -23,14 +23,14 @@ const Navbar: React.FC = () => {
 
   if (loading) {
     left = (
-      <div className='nav_left'>
+      <div className='m-auto  left-1'>
         <Link href='/'>
           <a data-active={isActive('/')}>Main Feed</a>
         </Link>
       </div>
     )
     right = (
-      <div className='nav_right'>
+      <div className='m-auto right-1 ' >
         <p>Validating session ...</p>
       </div>
     )
@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
 
   if (!session) {
     right = (
-      <div className='nav_right'>
+      <div className='m-auto  right-1' >
         <Link href='/api/auth/signin'>
           <a data-active={isActive('/signup')}>Log in</a>
         </Link>
@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
 
   if (session) {
     left = (
-      <div className='nav_left'>
+      <div className='m-auto flex jusity-start place-content-around  font-bold space-x-5' >
         <Link href='/'>
           <a data-active={isActive('/')}>Feed</a>
         </Link>
@@ -64,7 +64,7 @@ const Navbar: React.FC = () => {
       </div>
     )
     right = (
-      <div className='nav_right'>
+      <div className='place-content-around flex justify-end font-bold space-x-5 '>
         {session.user.image && (
           <Image
             className='navbar-image'
@@ -75,9 +75,9 @@ const Navbar: React.FC = () => {
           />
         )}
 
-        <p>
+        <div>
           {session.user.name} ({session.user.email})
-        </p>
+        </div>
         <button onClick={() => signOut()}>
           <a>Log out</a>
         </button>
@@ -86,7 +86,7 @@ const Navbar: React.FC = () => {
   }
 
   return (
-    <nav className='navbar'>
+    <nav className='m-auto  w-full inline-flex'>
       {left}
       {right}
     </nav>

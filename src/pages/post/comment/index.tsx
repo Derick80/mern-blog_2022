@@ -21,13 +21,13 @@ const Comment: React.FC = () => {
   return (
     <div className='create-comment'>
       <form onSubmit={submitData}>
-        <textarea
+        <textarea className='border border-separate m-auto w-full h-24'
           onChange={(e) => setContent(e.target.value)}
           placeholder='Leave a comment'
           rows={2}
           value={content}
         />
-        <input disabled={!content} type='submit' value='Create' />
+        <input disabled={!content} type='submit' value='Post a comment...' />
       </form>
     </div>
   )

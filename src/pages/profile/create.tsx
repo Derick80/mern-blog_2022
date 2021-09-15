@@ -7,7 +7,7 @@ const CreateProfile: React.FC = () => {
   const [country, setCountry] = useState('')
   const [city, setCity] = useState('')
   const [bio, setBio] = useState('')
-
+const [website,setWebsite] = useState('')
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     try {
@@ -55,6 +55,14 @@ const CreateProfile: React.FC = () => {
           rows={8}
           value={bio}
         />
+        <textarea
+          cols={50}
+          onChange={(e) => setWebsite(e.target.value)}
+          placeholder='Website url'
+          rows={8}
+          value={website}
+        />
+
         <input
           disabled={!nickname || !country || !city || !bio}
           type='submit'

@@ -6,18 +6,14 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { nickname, country, city, bio, avatar_url } = req.body
+
 
   const session = await getSession({ req })
-  const result = await prisma.profile.create({
-    data: {
-     avatar_url: avatar_url,
-      nickname: nickname,
-      country: country,
-      city: city,
-      bio: bio,
-      user: { connect: { email: session?.user?.email } },
-    },
-  })
+ 
+  const result = await prisma.profile.findUnique({
+    where: { id: session?.user_id}
+  }
+   
+  )
   res.json(result)
 }

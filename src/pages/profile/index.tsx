@@ -1,15 +1,17 @@
 import { GetServerSideProps, NextApiRequest, NextApiResponse } from 'next'
 import { useSession } from 'next-auth/client'
+import {useQuery } from 'react-query'
 import Image from 'next/image'
 import Avatar from '../../components/Avatar'
 import {useProfile, getProfile} from '../../hooks'
 
 
 
-const useProfile: React.FC = () => {
+const UserProfile: React.FC = () => {
   const [session] = useSession()
+const {data, status, error} = useProfile()
 
-
+  console.log(data);
   
   
   if (!session) {
@@ -23,41 +25,10 @@ const useProfile: React.FC = () => {
 
   return (
     <div>
-      <div className="form-widget">
-    {/* Add to the body */}
-    <Avatar
-      url={avatar_url}
-      size={150}
-      onUpload={(url) => {
-        setAvatarUrl(url)
-        updateProfile({ username, website, avatar_url: url })
-      }}
-    />
-    {/* ... */}
+    
   </div>
-      <div className='page'>
-        <h1>My Profile</h1>
-        <main>
-          <div key={items.id}>
-            <h2> {items.nickname} </h2>
-            <p>{items.country}</p>
-            <p>{items.city}</p>
-
-            <p className=''>{items.bio} </p>
-          </div>
-          {session.user.image && (
-            <Image
-              className='navbar-image'
-              src={session.user.image}
-              alt='myimage'
-              width='60'
-              height='60'
-            />
-          )}
-        </main>
-      </div>
-    </div>
+  
   )
 }
 
-export default useProfile
+export default UserProfile

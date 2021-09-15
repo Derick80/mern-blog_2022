@@ -28,14 +28,14 @@ type Props = {
 
 const Blog: React.FC<Props> = (props) => {
   return (
-    <>
-      <div className='container'>
-        <h3>Public Feed</h3>{' '}
+  
+      <>
+      
         {props.feed.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
-      </div>
-    </>
+      </>
+  
   )
 }
 

@@ -20,12 +20,12 @@ const PostCard: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : 'Unknown author'
 
   return (
-    <div className='card' key={post.id}>
-      <div className='card-cardtitle'>{post.title} </div>
+    <div className='max-w-lg rounded md:rounded-lg ring-blue-700' key={post.id}>
+      <div className='border-solid m-auto py-2 w-full text-center font-bold text-xl'>Title:{post.title} </div>
 
-      <p className='card-content'>{post.content}</p>
-      <p className='card-author'> Written by {authorName}</p>
-      <div className='card-stats-action'>
+      <p className='border border-separate m-auto w-full h-24 '>{post.content}</p>
+      <p className='m-auto w-full text-right font-semibold'> Written by {authorName}</p>
+      <div className='card-stats-action flex justify-end'>
         <Image onClick={() => likePost(post.id)} src={likeImage} alt='like' />
         liked by: {post.likes}
       </div>

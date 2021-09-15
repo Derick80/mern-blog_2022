@@ -79,6 +79,29 @@ interface Profile {
   bio:string
   updatedAt: object | null
   website: string
-  user:{}   
-   userId:number 
+  [users:User]: User
+
+}
+
+interface User{
+  id        :     number   
+  firstName :   string
+  lastName  :       string
+  name      :   string
+  email     :    string
+  emailVerified :string
+  image        :string
+  profileViews  :   number 
+  [likedPosts:Post]: Post
+  [likedComments:Comment] :Comment
+  [posts: Post]: Post       
+  [profile: Profile]: Profile   
+  [comments: Comment]: Comment     
+  createdAt : object | null
+  updatedAt : object | null
+}
+
+interface PostFormInput{
+  title: String;
+  content: String;
 }
