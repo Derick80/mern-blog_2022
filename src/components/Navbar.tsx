@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
 
   if (session) {
     left = (
-      <div className='m-auto flex jusity-start place-content-around  font-bold space-x-5' >
+      <div className='mr-8 place-content-around flex justify-start items-center font-bold space-x-5 ' >
         <Link href='/'>
           <a data-active={isActive('/')}>Feed</a>
         </Link>
@@ -64,7 +64,7 @@ const Navbar: React.FC = () => {
       </div>
     )
     right = (
-      <div className='place-content-around flex justify-end font-bold space-x-5 '>
+      <div className='ml-auto place-content-around flex justify-end items-center font-bold space-x-5 '>
         {session.user.image && (
           <Image
             className='navbar-image'
@@ -86,7 +86,7 @@ const Navbar: React.FC = () => {
   }
 
   return (
-    <nav className='m-auto  w-full inline-flex'>
+    <nav className='m-auto w-full inline-flex broder outline-black '>
       {left}
       {right}
     </nav>

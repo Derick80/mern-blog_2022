@@ -2,6 +2,7 @@ import React from 'react'
 import { GetStaticProps } from 'next'
 import prisma from '../utils/prisma'
 import PostCard from '../components/CardPost'
+import Left from '../components/Left'
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
@@ -30,10 +31,13 @@ const Blog: React.FC<Props> = (props) => {
   return (
   
       <>
-      
+  
+      <div className="flex-col w-screen">
+
         {props.feed.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
+          </div>
       </>
   
   )

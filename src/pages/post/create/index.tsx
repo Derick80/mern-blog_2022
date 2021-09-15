@@ -3,12 +3,12 @@ import Router from 'next/router'
 import {SubmitHandler, useForm} from 'react-hook-form'
 
 const Draft: React.FC = () => {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<PostFormInput>();
+
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
-  const onSubmit:SubmitHandler<PostFormInput>= async (data) => {
-  
+  const onSubmit = async (e:React.SyntheticEvent) => {
+  e.preventDefault()
     try {
       const body = { title, content }
       await fetch(`http://localhost:8077/api/post`, {
@@ -24,27 +24,32 @@ const Draft: React.FC = () => {
 
   return (
  
-      <form className="w-full max-w-lg m-auto py-10 mt-10 px-10 border" onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-full max-w-lg m-auto py-10 mt-10 px-10 border" onSubmit={onSubmit}>
         <div>
         <label className="text-gray-600 font-medium">Blog Title</label> 
-        <input className="border-solid border-gray-300 border  w-full
-    rounded text-gray-700 pr-20"  autoFocus {...register("title", { required: "Please Enter a title", })}  placeholder="Set a title for your post" />
+        <input className="border-solid border-gray-300 border py-2 px-4 w-full
+       rounded text-gray-700" 
+       autoFocus
+       onChange={(e)=>setTitle(e.target.value)}
+       placeholder="Set a"
+       type="text"
+       value={title}
+        />
 
-{errors.title && (
-  <div className="mb-3 text-normal text-red-500 ">{errors.title}</div>
-  )}
 
       <label className="text-gray-600 font-medium block mt-4">Content</label>
-      <textarea className="border-solid border-gray-300 border pr-20 py-1 w-full
-  rounded text-gray-700" rows={5} cols={5} placeholder="Write Something down" autoFocus {...register("content",{ required:true })} />
+      <textarea className="border-solid border-gray-300 border py-20 px-4 w-full
+      rounded text-gray-700" rows={5} cols={5} placeholder="Write Something down" 
+      autoFocus
+       onChange={(e)=>setContent(e.target.value)}
+       value={content}
+       />
   
        </div>
-        <button
-    className="mt-4 w-full bg-green-400 hover:bg-green-600 text-green-100 border shadow py-3 px-6 font-semibold text-md rounded"
-    type="submit"
-  >
+      
+        <button className="mt-4 w-full bg-green-400 hover:bg-green-600 text-green-100 border shadow py-3 px-6 font-semibold text-md rounded"  disabled={!content || !title} type='submit'>
     Submit
-  </button>
+   </button>
       </form>
   
   )

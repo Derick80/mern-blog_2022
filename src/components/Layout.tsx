@@ -8,10 +8,10 @@ type Props = {
 
 export const Layout: React.FC<Props> = ({ children }) => {
   return (
-    <div className='container'>
+    <div className='container m-auto'>
       <Navbar />
 
-      <div className='main'>{children}</div>
+      <div className='my-10'>{children}</div>
     </div>
   )
 }

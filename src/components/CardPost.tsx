@@ -20,7 +20,7 @@ const PostCard: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : 'Unknown author'
 
   return (
-    <div className='max-w-lg rounded md:rounded-lg ring-blue-700' key={post.id}>
+    <div className=' m-auto w-full max-w-lg rounded-lg ring-blue-700 flex-col' key={post.id}>
       <div className='border-solid m-auto py-2 w-full text-center font-bold text-xl'>Title:{post.title} </div>
 
       <p className='border border-separate m-auto w-full h-24 '>{post.content}</p>
@@ -35,6 +35,7 @@ const PostCard: React.FC<{ post: PostProps }> = ({ post }) => {
       </div>
       <Comment />
     </div>
+  
   )
 }
 

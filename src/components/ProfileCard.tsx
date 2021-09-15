@@ -4,13 +4,13 @@ export default function ProfileCard({ profile }: { profile: Profile }) {
     const lastUpdated = profile.updatedAt ? new Date() : null
     return (
       <div className="w-full max-w-lg m-auto py-10 mt-10 px-10 border">
-       <Image
+       {/* <Image
               className="image"
               src={profile.avatar_url}
               alt='myimage'
               width='60'
               height='60'
-            />
+            /> */}
         <div className="userInfo">
           <p className="username">{profile.nickname}</p>
           <p className="username">{profile.bio}</p>
