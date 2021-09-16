@@ -2,8 +2,14 @@ import { useEffect, useState } from 'react'
 import Image from'next/image'
 import { supabase } from '../utils/sup'
 
- function Avatar({ url, size, onUpload }) {
-  const [avatarUrl, setAvatarUrl] = useState(null)
+type AvatarProps ={
+  url:string,
+ 
+}
+
+ function Avatar({ url }: AvatarProps) {
+  const [avatarUrl, setAvatarUrl] 
+  =useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
 
   useEffect(() => {
@@ -12,7 +18,7 @@ import { supabase } from '../utils/sup'
 
   async function downloadImage(path) {
     try {
-      const { data, error } = await supabase.storage.from('avatars').download(path)
+      const { data, error } = await supabase.storage.from('images').download(path)
       if (error) {
         throw error
       }
@@ -38,7 +44,7 @@ import { supabase } from '../utils/sup'
       const filePath = `${fileName}`
 
       let { error: uploadError } = await supabase.storage
-        .from('avatars')
+        .from('images')
         .upload(filePath, file)
 
       if (uploadError) {
@@ -56,17 +62,20 @@ import { supabase } from '../utils/sup'
   return (
     <div>
       {avatarUrl ? (
+        
         <Image
           src={avatarUrl}
           alt="Avatar"
+          width='80'
+          height='80'
        
         />
       ) : (
-        <div className="avatar no-image" style={{ height: size, width: size }} />
+        <div className="avatar no-image" />
       )}
-      <div style={{ width: size }}>
+      <div >
         <label className="button primary block" htmlFor="single">
-          {uploading ? 'Uploading ...' : 'Upload'}
+       
         </label>
         <input
           style={{

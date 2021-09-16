@@ -1,35 +1,73 @@
-import React, { useState } from 'react'
-import Layout from '../../components/Layout'
+import React, { useState, ChangeEvent } from 'react'
+import UploadButton from '../../components/uploadButton'
 import Router from 'next/router'
+import { useSession, getSession } from 'next-auth/client'
+import { supabase } from '../../utils/sup'
+import { DEFAULT_AVATARS_BUCKET } from '../../utils/constants'
+
 
 const CreateProfile: React.FC = () => {
-  const [nickname, setNickname] = useState('')
-  const [country, setCountry] = useState('')
-  const [city, setCity] = useState('')
-  const [bio, setBio] = useState('')
-const [website,setWebsite] = useState('')
-const [avatar_url, setAvatarUrl] = useState('')
+
+  const [nickname, setNickname] = useState<string>('')
+  const [country, setCountry] = useState<string>('')
+  const [city, setCity] = useState<string>('')
+  const [bio, setBio] = useState<string>('')
+  const [website, setWebsite] = useState<string>('')
+  const [avatar_url, setAvatarUrl] = useState<string>('')
+  const [uploading, setUploading] = useState<boolean>(false)
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     try {
-      const body = { nickname, country, city, bio, website, avatar_url}
+      const body = { nickname, country, city, bio, website, avatar_url }
       await fetch('http://localhost:8077/api/profile/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       })
-      
+
     } catch (error) {
       console.error(error)
     }
   }
 
+  async function uploadAvatar(event: ChangeEvent<HTMLInputElement>) {
+    try {
+      setUploading(true)
+
+      if (!event.target.files || event.target.files.length == 0) {
+        throw 'You must select an image to upload.'
+      }
+      const session = await getSession()
+      const user = session?.user_id
+      const file = event.target.files[0]
+      const fileExt = file.name.split('.').pop()
+      const fileName = `${session?.user_id}${Math.random()}.${fileExt}`
+      const filePath = `${fileName}`
+
+      let { error: uploadError } = await supabase.storage
+        .from(DEFAULT_AVATARS_BUCKET)
+        .upload(filePath, file)
+
+      if (uploadError) {
+        throw uploadError
+      }
+
+      setAvatarUrl('')
+      setAvatarUrl(filePath)
+    } catch (error) {
+      console.log("this isn't working", error);
+
+    } finally {
+      setUploading(false)
+    }
+  }
+
   return (
     <div>
-      <form  className="w-full max-w-lg m-auto py-10 mt-10 px-10 border" onSubmit={submitData}>
+      <form className="w-full max-w-lg m-auto py-10 mt-10 px-10 border" onSubmit={submitData}>
         <div className="text-gray-600 font-medium" >Create Your Profile</div >
-        
+
         <textarea
           cols={50}
           onChange={(e) => setBio(e.target.value)}
@@ -57,29 +95,35 @@ const [avatar_url, setAvatarUrl] = useState('')
           type='text'
           value={city}
         />
-       
+
         <input
-          
+
           onChange={(e) => setWebsite(e.target.value)}
           placeholder='Website url'
-         type="text"
+          type="text"
           value={website}
         />
-<input
+        <input className="visibility hidden"
           autoFocus
           onChange={(e) => setAvatarUrl(e.target.value)}
           placeholder='avatar url'
           type='text'
           value={avatar_url}
         />
+        <label htmlFor="avatar">Avatar image</label>
+        <div className="avatarField">
+
+          <UploadButton onUpload={uploadAvatar} loading={uploading} />
+        </div>
+
         <button className="mt-4 w-full bg-green-400 hover:bg-green-600 text-green-100 border shadow py-3 px-6 font-semibold text-md rounded"
           disabled={!nickname || !country || !city || !bio}
           type='submit'
-          
+
         >Create </button>
-      
-        <a className='back' href='#' onClick={() => Router.push('/')}>
-                 or Cancel
+
+        <a className='back' href='#' onClick={() => Router.push('/profile')}>
+          or Cancel
         </a>
       </form>
     </div>

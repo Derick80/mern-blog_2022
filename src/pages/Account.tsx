@@ -13,17 +13,14 @@ export default function Account() {
   const [avatar, setAvatar] = useState<string | null>(null)
   const [username, setUsername] = useState<string | null>(null)
   const [website, setWebsite] = useState<string | null>(null)
-    const session =  getSession()
+  const [nickname, setNickname] = useState<string | null>(null)
+  const [country, setCountry] = useState<string | null>(null)
+  const [city, setCity] = useState<string | null>(null)
+  const [bio, setBio] = useState<string | null>(null)
+
+   
 
 
-  useEffect(() => {
-    getProfile()
-  }, [session])
-
-  async function signOut() {
-    const { error } = await supabase.auth.signOut()
-    if (error) console.log('Error logging out:', error.message)
-  }
 
   async function uploadAvatar(event: ChangeEvent<HTMLInputElement>) {
     try {
@@ -32,8 +29,8 @@ export default function Account() {
       if (!event.target.files || event.target.files.length == 0) {
         throw 'You must select an image to upload.'
       }
-
-      const user = supabase.auth.user()
+      const session = await getSession()
+      const user = session?.user_id
       const file = event.target.files[0]
       const fileExt = file.name.split('.').pop()
       const fileName = `${session?.user.id}${Math.random()}.${fileExt}`
@@ -67,8 +64,11 @@ export default function Account() {
 
   function setProfile(profile: Profile) {
     setAvatar(profile.avatar_url)
-    setUsername(profile.username)
-    setWebsite(profile.website)
+  setNickname(profile.nickname)
+  setCountry(profile.country)
+  setCity(profile.city)
+  setBio(profile.bio)
+  setWebsite(profile.website)
   }
 
   async function getProfile() {

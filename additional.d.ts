@@ -72,11 +72,27 @@ interface moreJSX extends IntrinsicElements {
 
 interface Profile {
   id: number      
-  avatar_url?:string 
+  avatar_url:string 
   nickname:string    
   city:string         
   country:string      
   bio:string
+  userId:number
+  updatedAt: object | null
+  website: string
+  [users:User]: User
+
+}
+
+
+interface DeProfile {
+  id: number      
+  avatar_url:string 
+  nickname:string    
+  city:string         
+  country:string      
+  bio:string
+  userId:number
   updatedAt: object | null
   website: string
   [users:User]: User
