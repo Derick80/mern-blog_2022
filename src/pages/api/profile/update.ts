@@ -6,22 +6,21 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { nickname, country, city, bio, avatar_url, website, userId } = req.body
- 
-  
   const session = await getSession({ req })
+  const { nicknames, countrys, citys, bios, avatar_urls, websites } = req.body
+ 
   const result = await prisma.profile.update({
    where: { 
-      id: userId,
+      userId: session?.user_id
    },
     data: {
-     avatar_url: avatar_url,
-      nickname: nickname,
-      country: country,
-      city: city,
-      bio: bio,
-      website: website,
-      user: { connect: { email: session?.user?.email } },
+     avatar_url: avatar_urls,
+      nickname: nicknames,
+      country: countrys,
+      city: citys,
+      bio: bios,
+      website: websites,
+
     },
   })
   res.json(result)

@@ -1,8 +1,8 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import { supabase } from '../utils/sup'
-import UploadButton from '../components/uploadButton'
-import Avatar from '../components/Avatar'
-import { useSession, getSession } from 'next-auth/client'
+import UploadButton from './uploadButton'
+import Avatar from './Avatar'
+import { useSession, getSession, session } from 'next-auth/client'
 import { DEFAULT_AVATARS_BUCKET } from '../utils/constants'
 
 
@@ -10,14 +10,14 @@ import { DEFAULT_AVATARS_BUCKET } from '../utils/constants'
 export default function Account() {
   const [loading, setLoading] = useState<boolean>(true)
   const [uploading, setUploading] = useState<boolean>(false)
-  const [avatar, setAvatar] = useState<string | null>(null)
+  const [avatar_url, setAvatarUrl] = useState<string | null>(null)
   const [username, setUsername] = useState<string | null>(null)
   const [website, setWebsite] = useState<string | null>(null)
   const [nickname, setNickname] = useState<string | null>(null)
   const [country, setCountry] = useState<string | null>(null)
   const [city, setCity] = useState<string | null>(null)
   const [bio, setBio] = useState<string | null>(null)
-
+const [id,setId] =useState<number>(0)
    
 
 
@@ -33,7 +33,7 @@ export default function Account() {
       const user = session?.user_id
       const file = event.target.files[0]
       const fileExt = file.name.split('.').pop()
-      const fileName = `${session?.user.id}${Math.random()}.${fileExt}`
+      const fileName = `${session?.user_id}${Math.random()}.${fileExt}`
       const filePath = `${fileName}`
 
       let { error: uploadError } = await supabase.storage
@@ -43,18 +43,8 @@ export default function Account() {
       if (uploadError) {
         throw uploadError
       }
-
-      let { error: updateError } = await supabase.from('profiles').upsert({
-        id: user!.id,
-        avatar_url: filePath,
-      })
-
-      if (updateError) {
-        throw updateError
-      }
-
-      setAvatar(null)
-      setAvatar(filePath)
+      setAvatarUrl(null)
+      setAvatarUrl(filePath)
     } catch (error) {
       alert(error.message)
     } finally {
@@ -62,57 +52,54 @@ export default function Account() {
     }
   }
 
-  function setProfile(profile: Profile) {
-    setAvatar(profile.avatar_url)
-  setNickname(profile.nickname)
-  setCountry(profile.country)
-  setCity(profile.city)
-  setBio(profile.bio)
-  setWebsite(profile.website)
-  }
 
-  async function getProfile() {
-    try {
+ function setProfile(profile:Profile) {
+  setId(profile?.id)
+  setAvatarUrl(profile?.avatar_url)
+  setNickname(profile?.nickname)
+  setCountry(profile?.country)
+  setCity(profile?.city)
+  setBio(profile?.bio)
+  setWebsite(profile?.website)
+}
+
+
+  
+  async function getProfile(){
+
+    try{
       setLoading(true)
-      const user = supabase.auth.user()
-
-      let { data, error } = await supabase
-        .from('profiles')
-        .select(`username, website, avatar_url`)
-        .eq('id', user!.id)
-        .single()
-
-      if (error) {
-        throw error
-      }
-
-      setProfile(data)
-    } catch (error) {
+    const response = await fetch('http://localhost:8077/api/profile', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+       
+      })
+    const data = await response.json()
+    setProfile(data)}
+    catch(error){
       console.log('error', error.message)
+
     } finally {
-      setLoading(false)
+      setLoading(true)
     }
+    
+  
   }
+  
+
+  const {data:profile, status, error} = useQuery('profile', getProfile)
+
+
 
   async function updateProfile() {
     try {
       setLoading(true)
-      const user = supabase.auth.user()
-
-      const updates = {
-        id: user!.id,
-        username,
-        website,
-        updated_at: new Date(),
-      }
-
-      let { error } = await supabase.from('profiles').upsert(updates, {
-        returning: 'minimal', // Don't return the value after inserting
-      })
-
-      if (error) {
-        throw error
-      }
+       const body ={ nickname, country, city, bio, avatar_url, website}
+      await fetch('http://localhost:8077/api/profile/update', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
     } catch (error) {
       alert(error.message)
     } finally {

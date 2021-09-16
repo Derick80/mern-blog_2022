@@ -6,6 +6,7 @@ type UserProfilePageProps = {
   city: string
   bio: string
   user: {
+    id: number
     name: string
     email: string
     image: string

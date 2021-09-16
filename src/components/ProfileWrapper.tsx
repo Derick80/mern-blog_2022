@@ -16,7 +16,7 @@ const ProfileWrapper=({profile, edits}: ProfileWrapperProps): JSX.Element=>{
 
     }else {
       return(
-        <EditProfile profile={profile} />
+        <EditProfile {...profile} />
       )
 
 }

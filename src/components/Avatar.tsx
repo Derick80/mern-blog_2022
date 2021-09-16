@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, ChangeEvent } from 'react'
 import Image from'next/image'
 import { supabase } from '../utils/sup'
 
 type AvatarProps ={
   url:string,
- 
+  onUpload: Function
+  uploadAvatar: (event: ChangeEvent<HTMLInputElement>) => Promise<void>
 }
 
- function Avatar({ url }: AvatarProps) {
-  const [avatarUrl, setAvatarUrl] 
-  =useState<string | null>(null)
-  const [uploading, setUploading] = useState(false)
+function Avatar({ url }: {url:string | null}) {
+  const [avatarUrl, setAvatarUrl]  =useState<string | null>(null)
+
 
   useEffect(() => {
     if (url) downloadImage(url)
@@ -30,38 +30,9 @@ type AvatarProps ={
   }
 
 
-  async function uploadAvatar(event) {
-    try {
-      setUploading(true)
-
-      if (!event.target.files || event.target.files.length === 0) {
-        throw new Error('You must select an image to upload.')
-      }
-
-      const file = event.target.files[0]
-      const fileExt = file.name.split('.').pop()
-      const fileName = `${Math.random()}.${fileExt}`
-      const filePath = `${fileName}`
-
-      let { error: uploadError } = await supabase.storage
-        .from('images')
-        .upload(filePath, file)
-
-      if (uploadError) {
-        throw uploadError
-      }
-
-      onUpload(filePath)
-    } catch (error) {
-      alert(error.message)
-    } finally {
-      setUploading(false)
-    }
-  }
 
   return (
-    <div>
-      {avatarUrl ? (
+      avatarUrl ? (
         
         <Image
           src={avatarUrl}
@@ -72,24 +43,7 @@ type AvatarProps ={
         />
       ) : (
         <div className="avatar no-image" />
-      )}
-      <div >
-        <label className="button primary block" htmlFor="single">
-       
-        </label>
-        <input
-          style={{
-            visibility: 'hidden',
-            position: 'absolute',
-          }}
-          type="file"
-          id="single"
-          accept="image/*"
-          onChange={uploadAvatar}
-          disabled={uploading}
-        />
-      </div>
-    </div>
+      )
   )
 }
 

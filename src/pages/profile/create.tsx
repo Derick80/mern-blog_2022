@@ -53,7 +53,6 @@ const CreateProfile: React.FC = () => {
         throw uploadError
       }
 
-      setAvatarUrl('')
       setAvatarUrl(filePath)
     } catch (error) {
       console.log("this isn't working", error);

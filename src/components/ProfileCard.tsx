@@ -19,18 +19,17 @@ console.log(nickname, country, city, bio, avatar_url, website, id, userId, updat
           <p className="username">{nickname}</p>
           <p className="username">{bio}</p>
           <p className="username">{country}</p>
-          <p className="username">{city}</p>
+         
+          <p className="username">{avatar_url}</p>
           <a className="website" href={website} target="_blank" rel="noreferrer">
             {website}
           </a>
-          <div className="avatarField">
+        
             <div className="avatarContainer">
-              {avatar_url ? (
+            
                 <Avatar url={avatar_url} />
-              ) : (
-                <div className="avatarPlaceholder">?</div>
-              )}
-            </div>
+             
+            
           </div>
           <p>
             <small>
