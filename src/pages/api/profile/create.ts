@@ -10,7 +10,7 @@ export default async function handle(
 
   const session = await getSession({ req })
  
-  const result = await prisma.profile.create({
+  const profile = await prisma.userProfile.create({
    
     data: {
      avatar_url: avatar_url,
@@ -22,5 +22,5 @@ export default async function handle(
       user: { connect: { email: session?.user?.email } },
     },
   })
-  res.json(result)
+  res.json(profile)
 }

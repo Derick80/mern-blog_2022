@@ -23,7 +23,7 @@ model User {
   likedPosts    Post[]    @relation("likedPosts")
   likedComments Comment[] @relation("likedComments")
   posts         Post[]
-  profile       Profile?
+  profile       UserProfile?
   comments      Comment[]
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
@@ -95,7 +95,7 @@ model Session {
   @@map(name: "sessions")
 }
 
-model Profile {
+model UserProfile {
   id         Int      @id @default(autoincrement())
   avatar_url String
   nickname   String

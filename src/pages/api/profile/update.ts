@@ -9,20 +9,27 @@ export default async function handle(
   const session = await getSession({ req })
   const { nicknames, countrys, citys, bios, avatar_urls, websites } = req.body
  
-  const result = await prisma.profile.update({
+  const userwithUpdatedProfile = await prisma.user.update({
    where: { 
-      userId: session?.user_id
+     email: session?.user.email
    },
-    data: {
-     avatar_url: avatar_urls,
-      nickname: nicknames,
-      country: countrys,
-      city: citys,
-      bio: bios,
-      website: websites,
-
-    },
+    data: { 
+        profile:{
+              update:{
+                avatar_url: avatar_urls,
+                nickname: nicknames,
+                country: countrys,
+                city: citys,
+                bio: bios,
+                website: websites,
+               },
+              },
+        },
   })
-  res.json(result)
+  res.json(userwithUpdatedProfile)
 }
 //might have to change id and profile idea using Number
+
+//found the way to do this finally. ugh
+
+// https://github.com/prisma/prisma-examples/tree/latest/javascript/rest-nextjs

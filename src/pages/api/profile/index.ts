@@ -9,13 +9,12 @@ export default async function handle(
   try{
 
   const session = await getSession({ req })
-  const myUserId = session?.user_id
-  const profile = await prisma.profile.findFirst({
-    where: {
-      id :  session?.user_id}
-      },
-
-  )
+  const id = session?.user_id
+  const profile = await prisma.userProfile.findFirst({
+    where: { 
+      userId: id,
+    },
+  })
   res.status(200)
   res.json({profile})
     }catch(error){
