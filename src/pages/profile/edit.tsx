@@ -10,13 +10,18 @@ import UploadButton from '../../components/uploadButton'
 import Router from 'next/router'
 import { DEFAULT_AVATARS_BUCKET } from '../../utils/constants'
 
-const EditProfile: React.FC = () => {
+
+type ProfileEditProps={
+  profile: Profile
+}
+
+const EditProfile= ({ profile}: ProfileEditProps)=> {
   const [nickname, setNickname] =useState<string | null>(null)
   const [country, setCountry] =useState<string | null>(null)
   const [city, setCity] =useState<string | null>(null)
   const [bio, setBio] =useState<string | null>(null)
 const [website,setWebsite] =useState<string | null>(null)
-const [id,setId] =useState<number | null>(null)
+const [id,setId] =useState<number |any >(null)
 const [avatar_url, setAvatarUrl] =useState<string | null>(null)
 const [uploading, setUploading] = useState<boolean>(false)
 
@@ -67,21 +72,8 @@ async function uploadAvatar(event: ChangeEvent<HTMLInputElement>) {
   }
 }
 
-const getProfile = async ()=>{
 
-const response = await fetch('http://localhost:8077/api/profile', {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-   
-  })
-const data = await response.json()
-const {profile} = data
-setProfile(data)
-return profile
 
-}
-
-const {data:profile, status, error} = useQuery('profile', getProfile)
 
  function setProfile(profile: Profile) {
      setId(profile.id)
@@ -119,7 +111,7 @@ const {data:profile, status, error} = useQuery('profile', getProfile)
         <input className="visability hidden "
          onChange={(e) => setId(e.target.value)}
             type='number'
-          value={profile.id }
+          value={profile?.id ||null }
         />
         <textarea
           cols={50}

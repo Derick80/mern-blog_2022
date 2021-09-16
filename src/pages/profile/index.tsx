@@ -5,14 +5,19 @@ import {useQuery } from 'react-query'
 import Image from 'next/image'
 import Avatar from '../../components/Avatar'
 // import {useProfile, getProfile} from '../../hooks'
-
+import ProfileWrapper from '../../components/ProfileWrapper'
 import CreateProfile from './create'
 import ProfileCard from '../../components/ProfileCard'
 import UploadButton from '../../components/uploadButton'
 
 import { DEFAULT_AVATARS_BUCKET } from '../../utils/constants'
+import EditProfile from './edit'
 
 const UserProfile= () => {
+  const [edit, setEdit] = useState(false)
+
+  
+ 
 //   const [nickname, setNickname] =useState<any>('')
 //   const [country, setCountry] =useState<any>(null)
 //   const [city, setCity] =useState<any>(null)
@@ -24,7 +29,7 @@ const UserProfile= () => {
 
   const [session] = useSession()
 
- const getProfile = async ()=>{
+ const getProfile = async (props: any)=>{
 
   const response = await fetch('http://localhost:8077/api/profile', {
       method: 'GET',
@@ -60,6 +65,12 @@ const {data:profile, status, error} = useQuery('profile', getProfile)
   // console.log(nickname, country, city, bio, avatar_url, website, id, userId, updatedAt)
 
 console.log("profile", profile);
+const handleEditClick = (e: React.SyntheticEvent) => {
+  return(setEdit(true))
+
+}
+
+
   if (!session) {
     return (
       <div>
@@ -75,23 +86,14 @@ console.log("profile", profile);
         </div>
       )
     
-    }else if (status === 'success' && !profile){
-      return(
-        <div>
-      <CreateProfile /> 
-        </div>
-      )
-    
     }
-    else if (status === 'success' && profile){
-      return (
-        <div>
-        <ProfileCard profile={profile} />
-        
-      </div>
-      
-      )
-    }else{
+    else if( status === 'success' ){
+      return<div>
+      <ProfileWrapper edits={edit} profile={profile} />
+      <button type="submit" onClick={handleEditClick}>Edit</button>
+      </div> 
+    }
+     else{
       return(<div>Nothing to see here</div>)
     }
   }

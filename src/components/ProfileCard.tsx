@@ -4,34 +4,29 @@ import EditProfile from '../pages/profile/edit'
 import Avatar from '../components/Avatar'
 
 
+const ProfileCard= ({ nickname, country, city, bio, avatar_url, website, id, userId, updatedAt}: Profile)=> {
+  // const [edit, setEdit] = useState(false)
 
-export default function ProfileCard({ profile }: { profile: Profile }) {
-  const [edit, setEdit] = useState(false)
-  const {nickname, country, city, bio, avatar_url, website, id, userId, updatedAt}
-= profile
-  const lastUpdated = profile.updatedAt ? new Date() : null
+  const lastUpdated = updatedAt ? new Date() : null
 console.log(nickname, country, city, bio, avatar_url, website, id, userId, updatedAt)
-  const handleEditClick = (e: React.SyntheticEvent) => {
-    setEdit(true)
-  }
-  if (edit === false) {
-    profile
-    return (<>
+ 
+  // if (edit === false) {
+        return (<>
 
       <div className="w-full max-w-lg m-auto py-10 mt-10 px-10 border">
 
         <div className="userInfo">
-          <p className="username">{profile.nickname}</p>
-          <p className="username">{profile.bio}</p>
-          <p className="username">{profile.country}</p>
-          <p className="username">{profile.city}</p>
-          <a className="website" href={profile.website} target="_blank" rel="noreferrer">
-            {profile.website}
+          <p className="username">{nickname}</p>
+          <p className="username">{bio}</p>
+          <p className="username">{country}</p>
+          <p className="username">{city}</p>
+          <a className="website" href={website} target="_blank" rel="noreferrer">
+            {website}
           </a>
           <div className="avatarField">
             <div className="avatarContainer">
-              {profile.avatar_url ? (
-                <Avatar url={profile.avatar_url} />
+              {avatar_url ? (
+                <Avatar url={avatar_url} />
               ) : (
                 <div className="avatarPlaceholder">?</div>
               )}
@@ -45,13 +40,14 @@ console.log(nickname, country, city, bio, avatar_url, website, id, userId, updat
                 : 'Never'}
             </small>
           </p>
-          <button type="submit" onClick={handleEditClick}>Edit</button>
+        
         </div>
 
       </div>
     </>
 
     )
-  }
-  return (<EditProfile />)
+  
 }
+
+export default ProfileCard
