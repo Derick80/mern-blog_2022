@@ -10,17 +10,17 @@ type Props = {
 const ProfilesCard: React.FC<Props> = ({ props }) => {
   console.log("profiles", props);
   return (<>
-    <div className="w-full max-w-lg m-auto py-10 mt-10 px-10 border">
+    <div >
       {props.map((item =>
         <div key={item.id} className="userInfo">
-          <p className="username">{item.nickname}</p>
-          <p className="username">{item.bio}</p>
-          <p className="username">{item.country}</p>
-          <p className="username">{item.avatar_url}</p>
-          <a className="website" href={item.website} target="_blank" rel="noreferrer">
+          <p >{item.nickname}</p>
+          <p >{item.bio}</p>
+          <p >{item.country}</p>
+          <p >{item.avatar_url}</p>
+          <a href={item.website} target="_blank" rel="noreferrer">
             {item.website}
           </a>
-          <div className="avatarContainer">
+          <div >
             <Avatar url={item.avatar_url} />
           </div>
         </div>

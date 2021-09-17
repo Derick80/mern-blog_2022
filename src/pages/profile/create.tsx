@@ -64,8 +64,8 @@ const CreateProfile: React.FC = () => {
 
   return (
     <div>
-      <form className="w-full max-w-lg m-auto py-10 mt-10 px-10 border" onSubmit={submitData}>
-        <div className="text-gray-600 font-medium" >Create Your Profile</div >
+      <form onSubmit={submitData}>
+        <div  >Create Your Profile</div >
 
         <textarea
           cols={50}
@@ -104,18 +104,18 @@ const CreateProfile: React.FC = () => {
         />
         
         <label htmlFor="avatar">Avatar image</label>
-        <div className="avatarField">
+        <div >
 
           <UploadButton onUpload={uploadAvatar} loading={uploading} />
         </div>
 
-        <button className="mt-4 w-full bg-green-400 hover:bg-green-600 text-green-100 border shadow py-3 px-6 font-semibold text-md rounded"
+        <button 
           disabled={!nickname || !country || !city || !bio}
           type='submit'
 
         >Create </button>
 
-        <a className='back' href='#' onClick={() => Router.push('/profile')}>
+        <a  href='#' onClick={() => Router.push('/profile')}>
           or Cancel
         </a>
       </form>

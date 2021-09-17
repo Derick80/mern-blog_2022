@@ -54,10 +54,9 @@ const EditProfile = ({
   return (
     <div>
       <form
-        className="w-full max-w-lg m-auto py-10 mt-10 px-10 border"
         onSubmit={submitData}
       >
-        <div className="text-gray-600 font-medium">Update Your Profile</div>
+        <div >Update Your Profile</div>
         <textarea
           cols={50}
           onChange={(e) => setBio(e.target.value)}
@@ -106,7 +105,7 @@ const EditProfile = ({
         </div>
         <div></div>
         <button
-          className="mt-4 w-full bg-green-400 hover:bg-green-600 text-green-100 border shadow py-3 px-6 font-semibold text-md rounded"
+         
           disabled={!nicknames || !countrys || !citys || !bios}
           type="submit"
           onClick={() => Router.push("/profile")}
@@ -114,7 +113,7 @@ const EditProfile = ({
           Save to update...{" "}
         </button>
 
-        <a className="back" href="#" onClick={() => Router.push("/")}>
+        <a  href="#" onClick={() => Router.push("/")}>
           or Cancel
         </a>
       </form>

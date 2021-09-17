@@ -45,7 +45,7 @@ const Drafts: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className='page'>
+    <div >
       <h3>My Drafts</h3>
 
       {props.drafts.map((post) => (

@@ -41,15 +41,15 @@ const ProfileCard = ({ profile }: DeProfile) => {
   if (edit === false) {
     return (
       <>
-        <div className="w-full max-w-lg m-auto py-10 mt-10 px-10 border">
-          <div className="userInfo">
-            <p className="username">{nickname}</p>
-            <p className="username">{bio}</p>
-            <p className="username">{country}</p>
+        <div >
+          <div >
+            <p>{nickname}</p>
+            <p>{bio}</p>
+            <p>{country}</p>
 
-            <p className="username">{avatar_url}</p>
+         
             <a
-              className="website"
+              
               href={website}
               target="_blank"
               rel="noreferrer"
@@ -57,7 +57,7 @@ const ProfileCard = ({ profile }: DeProfile) => {
               {website}
             </a>
 
-            <div className="avatarContainer">
+            <div >
               <Avatar url={avatar_url} />
             </div>
             <p>
@@ -70,7 +70,7 @@ const ProfileCard = ({ profile }: DeProfile) => {
             </p>
           </div>
           <button
-            className="mt-4 w-full bg-green-400 hover:bg-green-600 text-green-100 border shadow py-3 px-6 font-semibold text-md rounded"
+           
             type="submit"
             onClick={handleEditClick}
           >
