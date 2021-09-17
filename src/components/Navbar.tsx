@@ -58,8 +58,8 @@ const Navbar: React.FC = () => {
         <Link href='/post/drafts'>
           <a data-active={isActive('/post/drafts')}>My drafts</a>
         </Link>
-        <Link href='/profile'>
-          <a data-active={isActive('/profile')}>Profile</a>
+        <Link href='/profiles'>
+          <a data-active={isActive('/profiled')}>User Profiles</a>
         </Link>
       </div>
     )
@@ -74,7 +74,9 @@ const Navbar: React.FC = () => {
             height='80'
           />
         )}
-
+<Link href='/profile'>
+          <a data-active={isActive('/profile')}>My Profile</a>
+        </Link>
         <div>
           {session.user.name} ({session.user.email})
         </div>

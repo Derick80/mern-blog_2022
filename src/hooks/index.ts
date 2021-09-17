@@ -3,9 +3,9 @@ import {useQuery, useMutation  }from 'react-query'
 
 
 
-const getProfile = async ()=>{
+const getProfiles = async ()=>{
 
-    const response = await fetch('http://localhost:8077/api/profile', {
+    const response = await fetch('http://localhost:8077/api/profiles', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
        
@@ -16,8 +16,8 @@ const getProfile = async ()=>{
 }
 
 const useProfile = ()=>{
-    return useQuery('profile', getProfile)
+    return useQuery('profiles', getProfiles)
 }
 
-export { useProfile, getProfile}
+export { useProfile, getProfiles}
 

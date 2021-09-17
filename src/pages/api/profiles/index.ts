@@ -9,17 +9,12 @@ export default async function handle(
   try{
 
   const session = await getSession({ req })
- 
-  const profile = await prisma.user.findFirst({
-    where: { 
-      email: session?.user.email
-    },
-    include:{
-        profile: true,
-    }
+
+  const profiles = await prisma.userProfile.findMany({
+   
   })
   res.status(200)
-  res.json({profile})
+  res.json({profiles})
     }catch(error){
       res.status(500)
       res.json({error: "Unable to Fetch"})

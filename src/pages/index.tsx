@@ -4,6 +4,8 @@ import prisma from '../utils/prisma'
 import PostCard from '../components/CardPost'
 import Left from '../components/Left'
 import { useSession } from "next-auth/client"
+
+
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
     where: {
