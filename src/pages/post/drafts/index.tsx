@@ -1,7 +1,6 @@
 import React from 'react'
 import { GetServerSideProps } from 'next'
-import Layout from '../../../components/Layout'
-import Post from '../../../components/Post'
+import PostCard from '../../../components/CardPost'
 import { useSession, getSession } from 'next-auth/client'
 import prisma from '../../../utils/prisma'
 
@@ -19,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
     include: {
       author: {
-        select: { name: true },
+        select: { name: true, email: true },
       },
     },
   })
@@ -49,9 +48,9 @@ const Drafts: React.FC<Props> = (props) => {
       <h3>My Drafts</h3>
 
       {props.drafts.map((post) => (
-        <div key={post.id} className='post'>
-          <Post post={post} />
-        </div>
+        <PostCard key={post.id}
+          post={post} />
+       
       ))}
     </div>
   )

@@ -1,7 +1,6 @@
 import React from 'react'
 import { GetServerSideProps } from 'next'
-import Layout from '../../components/Layout'
-import Router from 'next/router'
+import {deletePost, publishPost, editPost} from '../../hooks'
 import prisma from '../../utils/prisma'
 import { useSession } from 'next-auth/client'
 
@@ -21,24 +20,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 }
 
-async function publishPost(id: number): Promise<void> {
-  await fetch(`http://localhost:8077/api/post/publish/${id}`, {
-    method: 'PUT',
-  })
-  await Router.push('/')
-}
-async function editPost(id: number): Promise<void> {
-  await fetch(`http://localhost:8077/api/post/edit/${id}`, {
-    method: 'PUT',
-  })
-  await Router.push('/')
-}
-async function deletePost(id: number): Promise<void> {
-  await fetch(`http://localhost:8077/api/post/${id}`, {
-    method: 'DELETE',
-  })
-  await Router.push('/')
-}
 
 type Props = {
   post: PostProps

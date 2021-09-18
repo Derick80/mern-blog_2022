@@ -8,7 +8,7 @@ type AvatarProps ={
   uploadAvatar: (event: ChangeEvent<HTMLInputElement>) => Promise<void>
 }
 
-function Avatar({ url }: {url:string | null}) {
+function UserAvatar({ url }: {url:string | null}) {
   const [avatarUrl, setAvatarUrl]  =useState<string | null>(null)
 
 
@@ -47,4 +47,4 @@ function Avatar({ url }: {url:string | null}) {
   )
 }
 
-export default Avatar
+export default UserAvatar

@@ -1,5 +1,6 @@
 
 import {useQuery, useMutation  }from 'react-query'
+import Router from 'next/router'
 
 
 
@@ -19,5 +20,22 @@ const useProfile = ()=>{
     return useQuery('profiles', getProfiles)
 }
 
-export { useProfile, getProfiles}
+async function publishPost(id: number): Promise<void> {
+    await fetch(`http://localhost:8077/api/post/publish/${id}`, {
+      method: 'PUT',
+    })
+    await Router.push('/')
+  }
 
+async function editPost(id: number): Promise<void> {
+    await fetch(`http://localhost:8077/api/post/edit/${id}`, {
+      method: 'PUT',
+    })
+    await Router.push('/')
+  }
+  async function deletePost(id: number): Promise<void> {
+    await fetch(`http://localhost:8077/api/post/${id}`, {
+      method: 'DELETE',
+    })
+    await Router.push('/')
+  }export { useProfile, getProfiles, editPost, deletePost, publishPost}
