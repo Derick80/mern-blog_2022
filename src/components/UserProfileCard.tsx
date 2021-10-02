@@ -49,39 +49,39 @@ const ProfileCard = ({ profile }: DeProfile) => {
   if (edit === false) {
     return (
       <>
-          <Card sx={{ maxWidth: 345 }} >
+        <Card sx={{ maxWidth: 345 }} >
           <Avatar>
-            <UserAvatar url={avatar_url}/>      </Avatar>
-            <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-        {nickname}
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          {bio}
-        </Typography>
-        <Typography gutterBottom variant="caption" component="div">
-           {city}
-          </Typography>
-          <Typography gutterBottom variant="caption" component="div">
-            {country}
-          </Typography>
-          <Typography gutterBottom variant="caption" component="div">
-            {website}
-          </Typography>
-          <Typography gutterBottom variant="caption" component="div">
-          Last updated{" "}
-                {lastUpdated
-                  ? `${lastUpdated.toLocaleDateString()} ${lastUpdated.toLocaleTimeString()}`
-                  : "Never"}
-          </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small" type="submit" onClick={handleEditClick}>Edit</Button>
-      
-      </CardActions>   
-           
-           
-        
+            <UserAvatar url={avatar_url} />      </Avatar>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {nickname}
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              {bio}
+            </Typography>
+            <Typography gutterBottom variant="caption" component="div">
+              {city}
+            </Typography>
+            <Typography gutterBottom variant="caption" component="div">
+              {country}
+            </Typography>
+            <Typography gutterBottom variant="caption" component="div">
+              {website}
+            </Typography>
+            <Typography gutterBottom variant="caption" component="div">
+              Last updated{" "}
+              {lastUpdated
+                ? `${lastUpdated.toLocaleDateString()} ${lastUpdated.toLocaleTimeString()}`
+                : "Never"}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" type="submit" onClick={handleEditClick}>Edit</Button>
+
+          </CardActions>
+
+
+
         </Card>
       </>
     );

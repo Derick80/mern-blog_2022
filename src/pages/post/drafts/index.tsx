@@ -1,8 +1,10 @@
 import React from 'react'
 import { GetServerSideProps } from 'next'
-import PostCard from '../../../components/CardPost'
+import PostCard from '../../../components/PostCard'
 import { useSession, getSession } from 'next-auth/client'
 import prisma from '../../../utils/prisma'
+import { Alert, Typography } from '@mui/material'
+import { Box } from '@mui/system'
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req })
@@ -36,23 +38,23 @@ const Drafts: React.FC<Props> = (props) => {
 
   if (!session) {
     return (
-      <div>
-        <h3>My Drafts</h3>
-        <div>You need to be authenticated to view this page.</div>
-      </div>
+      <Alert onClose={() => { }}>
+        You need to be authenticated to view this page.
+      </Alert>
     )
   }
 
   return (
-    <div >
-      <h3>My Drafts</h3>
-
+    <Box sx={{ p: 1, m: 2 }}>
+      <Typography variant="h3" gutterBottom component="div">
+        My Drafts
+      </Typography>
       {props.drafts.map((post) => (
         <PostCard key={post.id}
           post={post} />
-       
+
       ))}
-    </div>
+    </Box>
   )
 }
 

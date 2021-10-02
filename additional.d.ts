@@ -1,10 +1,11 @@
 type UserProfilePageProps = {
   id: number
-  avatar_url?:string
+  avatar_url?: string
   nickname: string
   country: string
   city: string
   bio: string
+  favorite?: number
   user: {
     id: number
     name: string
@@ -13,7 +14,16 @@ type UserProfilePageProps = {
   } | null
 }
 
-type PostProps = {
+interface LikeProps {
+  id: number
+  likeType: string
+  userId: number
+  postId: number
+  userProfileId: number
+  commentId: number
+}
+
+interface PostProps {
   id: number
   title: string
   author: {
@@ -31,7 +41,10 @@ type PostProps = {
   }
   categories: []
   views: number
-  likes: number
+  likes: Like[]
+  likedByUsers: []
+  likedById: number
+  userLiked: number
   createdAt: object | null
 
   updatedAt: object | null
@@ -70,67 +83,62 @@ interface moreJSX extends IntrinsicElements {
   nav_left: any
 }
 
-
 interface UserProfile {
-  id: number      
-  avatar_url:string 
-  nickname:string    
-  city:string         
-  country:string      
-  bio:string
-  userId:number
+  id: number
+  avatar_url: string
+  nickname: string
+  city: string
+  country: string
+  bio: string
+  userId: number
   updatedAt: object | null
   website: string
-  [users:User]: User
-
+  [users: User]: User
 }
 
-
 interface DeProfile {
-  
-  id        :     number   
-  firstName :   string
-  lastName  :       string
-  name      :   string
-  email     :    string
-  emailVerified :string
-  image        :string
-  profileViews  :   number 
-  reatedAt : object | null
-  updatedAt : object | null
-  profile:{
-
-    id: number      
-    avatar_url:string 
-    nickname:string    
-    city:string         
-    country:string      
-    bio:string
-    userId:number
+  id: number
+  firstName: string
+  lastName: string
+  name: string
+  email: string
+  emailVerified: string
+  image: string
+  profileViews: number
+  reatedAt: object | null
+  updatedAt: object | null
+  profile: {
+    id: number
+    avatar_url: string
+    nickname: string
+    city: string
+    country: string
+    bio: string
+    userId: number
     updatedAt: object | null
     website: string
   }
 }
 
-interface User{
-  id        :     number   
-  firstName :   string
-  lastName  :       string
-  name      :   string
-  email     :    string
-  emailVerified :string
-  image        :string
-  profileViews  :   number 
-  [likedPosts:Post]: Post
-  [likedComments:Comment] :Comment
-  [posts: Post]: Post       
-  [profile: Profile]: Profile   
-  [comments: Comment]: Comment     
-  createdAt : object | null
-  updatedAt : object | null
+interface User {
+  id: number
+  firstName: string
+  lastName: string
+  name: string
+  email: string
+  emailVerified: string
+  image: string
+  profileViews: number
+  [likedPosts: Post]: Post
+  [likedComments: Comment]: Comment
+  [posts: Post]: Post
+  [profile: Profile]: Profile
+  [comments: Comment]: Comment
+  createdAt: object | null
+  updatedAt: object | null
 }
 
-interface PostFormInput{
-  title: String;
-  content: String;
+interface PostFormInput {
+  title: String
+  content: String
 }

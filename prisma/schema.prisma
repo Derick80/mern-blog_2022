@@ -12,58 +12,80 @@ generator client {
 
 // schema.prisma
 model User {
-  id            Int       @id @default(autoincrement())
-  firstName     String?
-  lastName      String?
+  id            Int          @id @default(autoincrement())
   name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map(name: "email_verified")
+  email         String?      @unique
+  emailVerified DateTime?    @map(name: "email_verified")
   image         String?
-  profileViews  Int       @default(0)
-  likedPosts    Post[]    @relation("likedPosts")
-  likedComments Comment[] @relation("likedComments")
   posts         Post[]
   profile       UserProfile?
   comments      Comment[]
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  likes         Like[]
+  createdAt     DateTime     @default(now()) @map(name: "created_at")
+  updatedAt     DateTime     @updatedAt @map(name: "updated_at")
+
+
   @@map(name: "users")
 }
 
 model Post {
-  id           Int        @id @default(autoincrement())
-  title        String
-  content      String?
-  author       User?      @relation(fields: [authorId], references: [id])
-  authorId     Int?
-  categories   Category[] @relation(references: [id])
-  likedByUsers User[]     @relation("likedPosts")
-  views        Int        @default(0)
-  likes        Int        @default(0)
-  comments     Comment[]
-  userLiked    Int?
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @default(now())
-  published    Boolean    @default(false)
+  id        Int       @id @default(autoincrement())
+  title     String
+  content   String?
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  Int
+  views     Int       @default(0)
+  comments  Comment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  published Boolean   @default(false)
+  likes     Like[]
 }
 
-model Category {
-  id    Int    @id @default(autoincrement())
-  name  String
-  posts Post[] @relation(references: [id])
-}
-
+// https://github.com/SelfDevTV/reddit-clone/blob/master/prisma/schema.prisma
 model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  post      Post?    @relation(fields: [postId], references: [id]) // A comment can have one post
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  postId    Int?
+  likes     Like[]
+}
+
+model UserProfile {
   id           Int      @id @default(autoincrement())
-  content      String
-  post         Post?    @relation(fields: [postId], references: [id]) // A comment can have one post
-  likedByUsers User[]   @relation("likedComments")
-  likes        Int      @default(0)
-  author       User?    @relation(fields: [authorId], references: [id])
-  authorId     Int?
-  createdAt    DateTime @default(now())
+  avatar_url   String
+  nickname     String
+  city         String
+  country      String
+  bio          String
+  website      String
+  profileViews Int      @default(0)
+  user         User     @relation(fields: [userId], references: [id])
+  userId       Int      @unique
+  likes        Like[]
   updatedAt    DateTime @default(now())
-  postId       Int?
+}
+
+model Like {
+  id            Int          @id @default(autoincrement())
+  likeType      LikeType
+  user          User         @relation(fields: [userId], references: [id])
+  post          Post?        @relation(fields: [postId], references: [id])
+  comment       Comment?     @relation(fields: [commentId], references: [id])
+  userProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
+  userProfileId Int?
+  userId        Int
+  postId        Int?
+  commentId     Int?
+}
+
+enum LikeType {
+  LIKED
+  UNLIKE
 }
 
 model Account {
@@ -78,6 +100,7 @@ model Account {
   accessTokenExpires DateTime? @map(name: "access_token_expires")
   createdAt          DateTime  @default(now()) @map(name: "created_at")
   updatedAt          DateTime  @default(now()) @map(name: "updated_at")
+
   @@index([providerAccountId], name: "providerAccountId")
   @@index([providerId], name: "providerId")
   @@index([userId], name: "userId")
@@ -92,28 +115,6 @@ model Session {
   accessToken  String   @unique @map(name: "access_token")
   createdAt    DateTime @default(now()) @map(name: "created_at")
   updatedAt    DateTime @default(now()) @map(name: "updated_at")
+
   @@map(name: "sessions")
-}
-
-model UserProfile {
-  id         Int      @id @default(autoincrement())
-  avatar_url String
-  nickname   String
-  city       String
-  country    String
-  bio        String
-  website    String
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int      @unique
-  updatedAt  DateTime @default(now())
-}
-
-model Word {
-  id   Int    @id @default(autoincrement())
-  word String
-}
-
-model RealLate {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name String
 }

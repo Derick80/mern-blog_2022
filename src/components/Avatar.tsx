@@ -1,15 +1,15 @@
 import { useEffect, useState, ChangeEvent } from 'react'
-import Image from'next/image'
+import Image from 'next/image'
 import { supabase } from '../utils/sup'
 
-type AvatarProps ={
-  url:string,
+type AvatarProps = {
+  url: string,
   onUpload: Function
   uploadAvatar: (event: ChangeEvent<HTMLInputElement>) => Promise<void>
 }
 
-function UserAvatar({ url }: {url:string | null}) {
-  const [avatarUrl, setAvatarUrl]  =useState<string | null>(null)
+function UserAvatar({ url }: { url: string | null }) {
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
 
 
   useEffect(() => {
@@ -32,18 +32,18 @@ function UserAvatar({ url }: {url:string | null}) {
 
 
   return (
-      avatarUrl ? (
-        
-        <Image
-          src={avatarUrl}
-          alt="Avatar"
-          width='80'
-          height='80'
-       
-        />
-      ) : (
-        <div className="avatar no-image" />
-      )
+    avatarUrl ? (
+
+      <Image
+        src={avatarUrl}
+        alt="Avatar"
+        width='80'
+        height='80'
+
+      />
+    ) : (
+      <div className="avatar no-image" />
+    )
   )
 }
 

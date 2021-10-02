@@ -1,3 +1,5 @@
+import { Container, Grid } from '@mui/material'
+import { Box } from '@mui/system'
 import React, { ReactNode } from 'react'
 
 import Navbar from './Navbar'
@@ -8,11 +10,11 @@ type Props = {
 
 export const Layout: React.FC<Props> = ({ children }) => {
   return (
-    <div className='container m-auto'>
+    <Container sx={{ flexGrow: 1, maxWidth: '100%' }}>
       <Navbar />
 
-      <div className='my-10'>{children}</div>
-    </div>
+      <Grid container spacing={5} sx={{ mt: 3 }}>{children}</Grid>
+    </Container>
   )
 }
 

@@ -1,24 +1,21 @@
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+import { signOut, useSession } from "next-auth/client";
+import * as React from "react";
 import Link, { NextLinkComposed } from "./Link";
 
-import { useRouter } from "next/router";
-import { signOut, useSession } from "next-auth/client";
 
 export default function ButtonAppBar() {
   const [session, loading] = useSession();
   if (!session) {
     return (
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="static" color="transparent">
           <Toolbar>
-         
+
             <Button variant="contained" component={Link} noLinkStyle href="/">
               Main Feed{" "}
             </Button>
@@ -44,9 +41,9 @@ export default function ButtonAppBar() {
   } else {
     return (
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="static" color="secondary">
           <Toolbar>
-            
+
 
             <Button variant="contained" component={Link} noLinkStyle href="/">
               Feed Page{" "}
