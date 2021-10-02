@@ -47,12 +47,14 @@ async function publishPost(id: number): Promise<void> {
   await Router.push('/')
 }
 
-async function likePost(body: string): Promise<void> {
+async function likePost(postId: number, type: string): Promise<void> {
+  const body = { postId, type }
   await fetch(`http://localhost:8077/api/post/like`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   })
+  await Router.push('/')
 }
 
 async function editPost(id: number): Promise<void> {

@@ -5,6 +5,7 @@ import React from 'react'
 import PostCard from '../components/PostCard'
 import { Sidebar } from '../components/Sidebar'
 import prisma from '../utils/prisma'
+import { useSession } from "next-auth/client";
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({

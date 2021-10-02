@@ -12,28 +12,48 @@ type Props = {
 
 const LikeButton = ({ post }: Props) => {
     const [session] = useSession();
+    console.log(session);
 
-    const hasLiked = post.likes.find((like) => like.userId === session?.userId);
-    const { author } = post
+    const hasLiked = post.likes.find((like) => like.userId === session?.id);
+
     const items = post.likes.map(item => item)
-    const likeBelongsToUser = session?.user?.email === author?.email
+
     const body = items.map(itema => itema)
-    // const {userId, postId, likeType}= body
-    console.log(items);
-
-    return (
-        <>
-            <Button variant="outlined"
-                onClick={() => console.log("body", body)}
-
-            >
-                <ThumbUpOffAltIcon
 
 
-                />
-            </Button>
-            <Typography variant="h6">{calculateLikeCount(post.likes)}</Typography>
-        </>)
+    console.log("HASLIKED", hasLiked);
+
+    if (hasLiked?.likeType === "LIKED") {
+        return (
+            <>
+                <Button variant="outlined" color="info"
+                    onClick={() => likePost(post.id, "UNLIKE")}
+
+                >
+                    <ThumbUpIcon
+
+
+                    />
+                </Button>
+                <Typography variant="h6">{calculateLikeCount(post.likes)}</Typography>
+            </>)
+    } else {
+        return (
+            <>
+                <Button variant="outlined"
+                    onClick={() => likePost(post.id, "LIKED")}
+
+                >
+                    <ThumbUpOffAltIcon
+
+
+                    />
+                </Button>
+                <Typography variant="h6">{calculateLikeCount(post.likes)}</Typography>
+            </>
+
+        )
+    }
 }
 
 
