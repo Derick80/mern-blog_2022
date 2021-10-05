@@ -4,10 +4,15 @@ import Router from 'next/router'
 import { useSession, getSession } from 'next-auth/client'
 import { supabase } from '../../utils/sup'
 import { DEFAULT_AVATARS_BUCKET } from '../../utils/constants'
+import { createUserProfile } from '../../hooks'
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import { Typography } from '@mui/material'
+import Link from '../../components/Link'
 
 
 const CreateProfile: React.FC = () => {
-
   const [nickname, setNickname] = useState<string>('')
   const [country, setCountry] = useState<string>('')
   const [city, setCity] = useState<string>('')
@@ -18,17 +23,7 @@ const CreateProfile: React.FC = () => {
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault()
-    try {
-      const body = { nickname, country, city, bio, website, avatar_url }
-      await fetch('http://localhost:8077/api/profile/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      })
-
-    } catch (error) {
-      console.error(error)
-    }
+    createUserProfile(nickname, country, city, bio, website, avatar_url)
   }
 
   async function uploadAvatar(event: ChangeEvent<HTMLInputElement>) {
@@ -55,71 +50,81 @@ const CreateProfile: React.FC = () => {
 
       setAvatarUrl(filePath)
     } catch (error) {
-      console.log("this isn't working", error);
-
+      console.log("this isn't working", error)
     } finally {
       setUploading(false)
     }
   }
 
   return (
-    <div>
-      <form onSubmit={submitData}>
-        <div  >Create Your Profile</div >
+    <Box
+      component='form'
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete='off'
+      onSubmit={submitData}
+    >
+      <Typography variant='h3'>Create Your Profile</Typography>
 
-        <textarea
-          cols={50}
-          onChange={(e) => setBio(e.target.value)}
-          placeholder='Bio'
-          rows={8}
-          value={bio}
-        /><input
-          autoFocus
-          onChange={(e) => setNickname(e.target.value)}
-          placeholder='Nickname'
-          type='text'
-          value={nickname}
-        />
-        <input
-          autoFocus
-          onChange={(e) => setCountry(e.target.value)}
-          placeholder='Country'
-          type='text'
-          value={country}
-        />
-        <input
-          autoFocus
-          onChange={(e) => setCity(e.target.value)}
-          placeholder='City'
-          type='text'
-          value={city}
-        />
+      <TextField
+        required
+        id='outlined-required'
+        onChange={(e) => setBio(e.target.value)}
+        placeholder='Bio'
+        label='Bio'
+        value={bio}
+      />
+      <TextField
+        autoFocus
+        onChange={(e) => setNickname(e.target.value)}
+        placeholder='Nickname'
+        type='text'
+        value={nickname}
+      />
+      <TextField
+        autoFocus
+        onChange={(e) => setCountry(e.target.value)}
+        placeholder='Country'
+        type='text'
+        value={country}
+      />
+      <TextField
+        autoFocus
+        onChange={(e) => setCity(e.target.value)}
+        placeholder='City'
+        type='text'
+        value={city}
+      />
 
-        <input
+      <TextField
+        onChange={(e) => setWebsite(e.target.value)}
+        placeholder='Website url'
+        type='text'
+        value={website}
+      />
 
-          onChange={(e) => setWebsite(e.target.value)}
-          placeholder='Website url'
-          type="text"
-          value={website}
-        />
-        
-        <label htmlFor="avatar">Avatar image</label>
-        <div >
+      <Box>
+        <Typography variant='h6'>Avatar image</Typography>
+        <UploadButton onUpload={uploadAvatar} loading={uploading} />
+      </Box>
 
-          <UploadButton onUpload={uploadAvatar} loading={uploading} />
-        </div>
-
-        <button 
-          disabled={!nickname || !country || !city || !bio}
-          type='submit'
-
-        >Create </button>
-
-        <a  href='#' onClick={() => Router.push('/profile')}>
-          or Cancel
-        </a>
-      </form>
-    </div>
+      <Button disabled={!nickname || !country || !city || !bio} type='submit'>
+        Create{' '}
+      </Button>
+      <Button
+        variant="contained"
+        component={Link}
+        noLinkStyle
+        href="/profiles"
+      >
+        or Cancel{" "}
+      </Button>
+      <a href='#' onClick={() => Router.push('/profile')}>
+        or Cancel
+      </a>
+    </Box>
   )
 }
 

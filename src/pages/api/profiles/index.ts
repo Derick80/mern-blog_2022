@@ -6,18 +6,18 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  try{
+  try {
+    const session = await getSession({ req })
 
-  const session = await getSession({ req })
-
-  const profiles = await prisma.userProfile.findMany({
-   
-  })
-  res.status(200)
-  res.json({profiles})
-    }catch(error){
-      res.status(500)
-      res.json({error: "Unable to Fetch"})
-    }
- 
+    const profiles = await prisma.userProfile.findMany({
+      include: {
+        likes: true,
+      },
+    })
+    res.status(200)
+    res.json({ profiles })
+  } catch (error) {
+    res.status(500)
+    res.json({ error: 'Unable to Fetch' })
+  }
 }

@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from 'react-query'
+import { useQuery } from 'react-query'
 import Router from 'next/router'
 
 const createPost = async (title: string, content: string) => {
@@ -11,6 +11,31 @@ const createPost = async (title: string, content: string) => {
   await Router.push('/post/drafts')
 }
 
+async function publishPost(id: number): Promise<void> {
+  await fetch(`http://localhost:8077/api/post/publish/${id}`, {
+    method: 'PUT',
+  })
+  await Router.push('/')
+}
+// calculate likes as they are submitted
+const calculateLikeCount = (likes: any[]) => {
+  const addLike = likes.filter((like) => like.likeType === 'LIKED')
+  const minusLike = likes.filter((like) => like.likeType === 'UNLIKED')
+
+  const likeCount = addLike.length - minusLike.length
+  return likeCount
+}
+// like or unlike a post with this function
+async function likePost(postId: number, type: string): Promise<void> {
+  const body = { postId, type }
+  await fetch(`http://localhost:8077/api/post/like`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+  await Router.reload()
+}
+
 const getProfiles = async () => {
   const response = await fetch('http://localhost:8077/api/profiles', {
     method: 'GET',
@@ -20,41 +45,76 @@ const getProfiles = async () => {
   const { profile } = data
   return profile
 }
-async function unlikePost(id: number): Promise<void> {
-  await fetch(`http://localhost:8077/api/post/${id}`, {
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
-  })
-  await Router.push('/')
-}
-
-const calculateLikeCount = (likes: any[]) => {
-  const addLike = likes.filter((like) => like.likeType === 'LIKED')
-  const minusLike = likes.filter((like) => like.likeType === 'UNLIKED')
-
-  const likeCount = addLike.length - minusLike.length
-  return likeCount
-}
 
 const useProfile = () => {
   return useQuery('profiles', getProfiles)
 }
 
-async function publishPost(id: number): Promise<void> {
-  await fetch(`http://localhost:8077/api/post/publish/${id}`, {
-    method: 'PUT',
-  })
-  await Router.push('/')
-}
-
-async function likePost(postId: number, type: string): Promise<void> {
-  const body = { postId, type }
-  await fetch(`http://localhost:8077/api/post/like`, {
+// like or unlike a post with this function
+async function likeUserProfile(
+  userProfileId: number,
+  type: string
+): Promise<void> {
+  const body = { userProfileId, type }
+  await fetch(`http://localhost:8077/api/profiles/like`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   })
-  await Router.push('/')
+  await Router.reload()
+}
+const getUserProfile = async () => {
+  const response = await fetch('http://localhost:8077/api/profile', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+  const data = await response.json()
+  const { profile } = data
+  return profile
+}
+
+const createUserProfile = async (
+  nickname: string,
+  country: string,
+  city: string,
+  bio: string,
+  website: string,
+  avatar_url: string
+) => {
+  const body = { nickname, country, city, bio, website, avatar_url }
+  await fetch('http://localhost:8077/api/profile/create', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+  await Router.push('/profile')
+}
+
+const updateUserProfile = async (
+  id: number,
+  nicknames: string,
+  countrys: string,
+  citys: string,
+  bios: string,
+  websites: string
+) => {
+  const body = { id, nicknames, countrys, citys, bios, websites }
+  await fetch('http://localhost:8077/api/profile/update', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+  await Router.push('/profile')
+}
+
+const getProfile = async () => {
+  const response = await fetch('http://localhost:8077/api/profile', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+  const data = await response.json()
+  const { profile } = data
+  return profile
 }
 
 async function editPost(id: number): Promise<void> {
@@ -76,8 +136,11 @@ export {
   editPost,
   deletePost,
   publishPost,
-  unlikePost,
   likePost,
   createPost,
+  getUserProfile,
   calculateLikeCount,
+  createUserProfile,
+  updateUserProfile,
+  likeUserProfile,
 }

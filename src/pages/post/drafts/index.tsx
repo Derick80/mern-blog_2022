@@ -46,13 +46,11 @@ const Drafts: React.FC<Props> = (props) => {
 
   return (
     <Box sx={{ p: 1, m: 2 }}>
-      <Typography variant="h3" gutterBottom component="div">
+      <Typography variant='h3' gutterBottom component='div'>
         My Drafts
       </Typography>
       {props.drafts.map((post) => (
-        <PostCard key={post.id}
-          post={post} />
-
+        <PostCard key={post.id} post={post} />
       ))}
     </Box>
   )

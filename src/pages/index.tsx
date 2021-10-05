@@ -1,11 +1,10 @@
-import { Grid } from '@mui/material'
+import { Container, Divider, Grid, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { GetStaticProps } from 'next'
 import React from 'react'
 import PostCard from '../components/PostCard'
-import { Sidebar } from '../components/Sidebar'
+import Sidebar from '../components/Sidebar'
 import prisma from '../utils/prisma'
-import { useSession } from "next-auth/client";
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
@@ -37,20 +36,21 @@ type Props = {
   feed: PostProps[]
 }
 
-const Index: React.FC<Props> = (props) => {
+const Index = (props: Props) => {
 
   return (
 
 
-    <Grid container item spacing={5} sx={{ mt: 3 }}>
-      <Box sx={{ flexGrow: 1, display: 'block', p: 5, m: 2 }}>
-
+    <Container maxWidth="lg" >
+      <Grid container spacing={5} sx={{ mt: 3 }}>
         {props.feed.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
-      </Box>
-      <Sidebar />
-    </Grid>
+
+        <Sidebar />
+
+      </Grid></Container>
+
   )
 }
 

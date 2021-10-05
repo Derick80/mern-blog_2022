@@ -1,18 +1,10 @@
-import React, { useState, ChangeEvent } from "react";
-import { useSession, getSession } from "next-auth/client";
-import { useQuery } from "react-query";
-import Image from "next/image";
-import Avatar from "../../components/Avatar";
-// import {useProfile, getProfile} from '../../hooks'
-import { supabase } from "../../utils/sup";
-import ProfileCard from "../../components/ProfilesCard";
-import UploadButton from "../../components/uploadButton";
+import { Box, Button, TextField } from "@mui/material";
+import { updateUserProfile } from '../../hooks'
 import Router from "next/router";
-import { DEFAULT_AVATARS_BUCKET } from "../../utils/constants";
+import React, { useState } from "react";
+import Avatar from "../../components/Avatar";
+import { Typography } from '@mui/material'
 
-type ProfileEditProps = {
-  props: DeProfile;
-};
 
 const EditProfile = ({
   nickname,
@@ -22,21 +14,18 @@ const EditProfile = ({
   avatar_url,
   website,
   id,
-  userId,
-  updatedAt,
+
 }: UserProfile) => {
-  const [nicknames, setNickname] = useState<string | null>(null);
-  const [countrys, setCountry] = useState<string | null>(null);
-  const [citys, setCity] = useState<string | null>(null);
-  const [bios, setBio] = useState<string | null>(null);
-  const [websites, setWebsite] = useState<string | null>(null);
+  const [nicknames, setNickname] = useState<string>('');
+  const [countrys, setCountry] = useState<string>('');
+  const [citys, setCity] = useState<string>('');
+  const [bios, setBio] = useState<string>('');
+  const [websites, setWebsite] = useState<string>('');
 
-  const [uploading, setUploading] = useState<boolean>(false);
-
-  const [session] = useSession();
-
+  //I guess I have to input the props in order inwhich they were defined in the updateUserProfile function. Meaning the ID number had to go before the nicknames string.  ALthough once I'm destructuring in the function order doesn't matter. 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    updateUserProfile(id, nicknames, countrys, citys, bios, websites)
     try {
       const body = { nicknames, countrys, citys, bios, websites, id };
       console.log(body);
@@ -52,72 +41,78 @@ const EditProfile = ({
   };
 
   return (
-    <div>
-      <form
-        onSubmit={submitData}
-      >
-        <div >Update Your Profile</div>
-        <textarea
-          cols={50}
-          onChange={(e) => setBio(e.target.value)}
-          placeholder="Bio"
-          rows={8}
-          defaultValue={bio || ""}
-        />
-        <input
-          autoFocus
-          onChange={(e) => setNickname(e.target.value)}
-          placeholder="Nickname"
-          type="text"
-          defaultValue={nickname || ""}
-        />
-        <input
-          autoFocus
-          onChange={(e) => setCountry(e.target.value)}
-          placeholder="Country"
-          type="text"
-          defaultValue={country || ""}
-        />
-        <input
-          autoFocus
-          onChange={(e) => setCity(e.target.value)}
-          placeholder="City"
-          type="text"
-          defaultValue={city || ""}
-        />
 
-        <input
-          onChange={(e) => setWebsite(e.target.value)}
-          placeholder="Website url"
-          type="text"
-          defaultValue={website || ""}
-        />
+    <Box
+      component='form'
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete='off'
+      onSubmit={submitData}
+    >
+      <Typography variant='h3' >Update Your Profile</Typography>
+      <TextField
 
-        <label htmlFor="avatar">Avatar image</label>
-        <div className="avatarField">
-          <div className="avatarContainer">
-            {avatar_url ? (
-              <Avatar url={avatar_url} />
-            ) : (
-              <div className="avatarPlaceholder">?</div>
-            )}
-          </div>
+        onChange={(e) => setBio(e.target.value)}
+        placeholder="Bio"
+        rows={8}
+        defaultValue={bio || ""}
+      />
+      <TextField
+        autoFocus
+        onChange={(e) => setNickname(e.target.value)}
+        placeholder="Nickname"
+        type="text"
+        defaultValue={nickname}
+      />
+      <TextField
+        autoFocus
+        onChange={(e) => setCountry(e.target.value)}
+        placeholder="Country"
+        type="text"
+        defaultValue={country || ""}
+      />
+      <TextField
+        autoFocus
+        onChange={(e) => setCity(e.target.value)}
+        placeholder="City"
+        type="text"
+        defaultValue={city || ""}
+      />
+
+      <TextField
+        onChange={(e) => setWebsite(e.target.value)}
+        placeholder="Website url"
+        type="text"
+        defaultValue={website || ""}
+      />
+
+      <label htmlFor="avatar">Avatar image</label>
+      <div className="avatarField">
+        <div className="avatarContainer">
+          {avatar_url ? (
+            <Avatar url={avatar_url} />
+          ) : (
+            <div className="avatarPlaceholder">?</div>
+          )}
         </div>
-        <div></div>
-        <button
-         
-          disabled={!nicknames || !countrys || !citys || !bios}
-          type="submit"
-          onClick={() => Router.push("/profile")}
-        >
-          Save to update...{" "}
-        </button>
+      </div>
+      <div></div>
+      <Button
 
-        <a  href="#" onClick={() => Router.push("/")}>
-          or Cancel
-        </a>
-      </form>
-    </div>
+        disabled={!nicknames || !countrys || !citys || !bios}
+        type="submit"
+        onClick={() => Router.push("/profile")}
+      >
+        Save to update...{" "}
+      </Button>
+
+      <a href="#" onClick={() => Router.push("/")}>
+        or Cancel
+      </a>
+    </Box>
+
   );
 };
 

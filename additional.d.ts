@@ -78,11 +78,6 @@ type CategoryProps = {
   }
 }
 
-interface moreJSX extends IntrinsicElements {
-  nav_right: any
-  nav_left: any
-}
-
 interface UserProfile {
   id: number
   avatar_url: string
@@ -93,6 +88,7 @@ interface UserProfile {
   userId: number
   updatedAt: object | null
   website: string
+  likes: Like[]
   [users: User]: User
 }
 

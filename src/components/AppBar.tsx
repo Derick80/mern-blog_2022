@@ -85,6 +85,7 @@ export default function ButtonAppBar() {
             >
               My Profile{" "}
             </Button>
+            <Box> you are logged in as {session?.user?.email}</Box>
             <Button onClick={() => signOut()} color="inherit">
               LogOut
             </Button>

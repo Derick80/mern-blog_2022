@@ -23,7 +23,7 @@ const UserProfiles = () => {
 
     const { data: profiles, status, error } = useQuery('profiles', getProfiles)
 
- 
+
 
 
 
@@ -44,7 +44,11 @@ const UserProfiles = () => {
     }
     else if (status === 'success') {
         return <div>
-            <ProfilesCard  props={profiles} />
+            {profiles.map((profile) => (
+                <ProfilesCard key={profile.id} profile={profile} />
+
+            ))}
+
 
         </div>
     }

@@ -1,19 +1,15 @@
-import Image from "next/image";
-import { useState } from "react";
-import EditProfile from "../pages/profile/edit";
-import UserAvatar from "../components/Avatar";
-import Card from '@mui/material/Card'
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
+import { Box } from "@mui/system";
+import { useState } from "react";
+import UserAvatar from "../components/Avatar";
+import EditProfile from "../pages/profile/edit";
 
 
-type Props = {
-  profile: DeProfile;
-};
 
 const ProfileCard = ({ profile }: DeProfile) => {
   const {
@@ -23,28 +19,16 @@ const ProfileCard = ({ profile }: DeProfile) => {
     bio,
     avatar_url,
     website,
-    id,
-    userId,
+
     updatedAt,
   } = profile;
   const [edit, setEdit] = useState(false);
-  // const pItems = profile.profile.map(item=> item)
+
   const handleEditClick = (e: React.SyntheticEvent) => {
     return setEdit(true);
   };
 
   const lastUpdated = updatedAt ? new Date() : null;
-  console.log(
-    nickname,
-    country,
-    city,
-    bio,
-    avatar_url,
-    website,
-    id,
-    userId,
-    updatedAt
-  );
 
   if (edit === false) {
     return (
@@ -88,9 +72,9 @@ const ProfileCard = ({ profile }: DeProfile) => {
   } else {
   }
   return (
-    <div>
+    <Box>
       <EditProfile {...profile} />
-    </div>
+    </Box>
   );
 };
 

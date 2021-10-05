@@ -1,17 +1,18 @@
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
-import { Button, Grid } from '@mui/material'
+import { Button, Divider, Grid } from '@mui/material'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
+import { Box } from '@mui/system'
 import { useSession } from "next-auth/client"
 import Router from 'next/router'
 import React, { useState } from 'react'
 import { deletePost, editPost, likePost, publishPost } from '../hooks'
-import LikeButton from './LikeButton'
+import LikePost from './LikePost'
+import PostUsersCard from './PostUsersCard'
 
 
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 type Props = {
   post: PostProps;
@@ -20,7 +21,6 @@ const PostCard = ({ post }: Props) => {
 
   const [session] = useSession();
   const { id, title, content, author, likes, published, views } = post
-  const [like, setLike] = useState()
 
 
 
@@ -29,13 +29,19 @@ const PostCard = ({ post }: Props) => {
   const postBelongsToUser = session?.user?.email === author?.email
   if (published === true) {
     return (
-      <Grid
+      <Grid item
+        xs={12}
+        md={8}
+        sx={{}}
+
       >
-        <Card sx={{ maxWidth: 345, p: 5 }} key={post.id}>
+
+        <Card component="div" key={post.id} sx={{ gridArea: 'main', display: 'block' }}>
           <CardContent>
             <Typography variant="h6" sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
               {title}
             </Typography>
+            <Divider />
             <Typography variant="body2">
               {content}
             </Typography>
@@ -45,35 +51,42 @@ const PostCard = ({ post }: Props) => {
             </Typography>
           </CardContent>
           <CardActions >
-            <LikeButton post={post} />
-
+            <LikePost post={post} />
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            ></Typography>
             <Typography variant="subtitle1">
               Views: {views}
             </Typography>
             <Typography
               variant="h6"
-              component="div"
-              sx={{ flexGrow: 1 }}
+
+
             ></Typography>
             {userHasValidSession && postBelongsToUser && (
-              <div>
-                {' '}
-                <Button variant="contained" color="primary" onClick={() => editPost(id)}>Edit</Button>
-
-                <Button variant="contained" color="primary" onClick={() => deletePost(id)}>Delete</Button>
-              </div>
+              <PostUsersCard id={id} />
             )}
 
           </CardActions>
         </Card>
+
       </Grid>
     )
 
   } else {
+
     return (
-      <Grid
+      <Grid item
+        xs={12}
+        md={8}
+        sx={{}}
+
       >
-        <Card sx={{ maxWidth: 345 }} key={post.id}>
+
+
+        <Card component="div" key={post.id} sx={{ gridArea: 'main', display: 'block' }}>
           <CardContent>
             <Typography variant="h6" sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
               {title}
@@ -90,21 +103,25 @@ const PostCard = ({ post }: Props) => {
 
             <Typography
               variant="h6"
-              component="div"
-              sx={{ flexGrow: 1 }}
+
+
             ></Typography>
             {userHasValidSession && postBelongsToUser && (
               <div>
                 {' '}
-                <Button variant="contained" color="primary" onClick={() => publishPost(id)}>Publish</Button>
+                <Button component="span" sx={{ display: 'inline' }} variant="contained" color="primary" onClick={() => publishPost(id)}>Publish</Button>
 
-                <Button variant="contained" color="primary" onClick={() => deletePost(id)}>Delete</Button>
+                <Button component="span" sx={{ display: 'inline' }} variant="contained" color="primary" onClick={() => deletePost(id)}>Delete</Button>
               </div>
             )}
 
           </CardActions>
         </Card>
+
+
+
       </Grid>
+
     )
   }
 
