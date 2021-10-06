@@ -1,10 +1,11 @@
-import { useState, useEffect, ChangeEvent } from 'react'
-import { supabase } from '../utils/sup'
-import UploadButton from './uploadButton'
-import Avatar from './Avatar'
-import { useSession, getSession, session } from 'next-auth/client'
+import { getSession, session } from 'next-auth/client'
+import { ChangeEvent, useState } from 'react'
 import { DEFAULT_AVATARS_BUCKET } from '../utils/constants'
+import { supabase } from '../utils/sup'
+import Avatar from './Avatar'
+import UploadButton from './uploadButton'
 
+import { useQuery } from 'react-query'
 
 
 export default function Account() {
@@ -17,8 +18,8 @@ export default function Account() {
   const [country, setCountry] = useState<string | null>(null)
   const [city, setCity] = useState<string | null>(null)
   const [bio, setBio] = useState<string | null>(null)
-const [id,setId] =useState<number>(0)
-   
+  const [id, setId] = useState<number>(0)
+
 
 
 
@@ -53,53 +54,54 @@ const [id,setId] =useState<number>(0)
   }
 
 
- function setProfile(profile:Profile) {
-  setId(profile?.id)
-  setAvatarUrl(profile?.avatar_url)
-  setNickname(profile?.nickname)
-  setCountry(profile?.country)
-  setCity(profile?.city)
-  setBio(profile?.bio)
-  setWebsite(profile?.website)
-}
+  function setProfile(profile: UserProfile) {
+    setId(profile?.id)
+    setAvatarUrl(profile?.avatar_url)
+    setNickname(profile?.nickname)
+    setCountry(profile?.country)
+    setCity(profile?.city)
+    setBio(profile?.bio)
+    setWebsite(profile?.website)
+  }
 
 
-  
-  async function getProfile(){
 
-    try{
+  async function getProfile() {
+
+    try {
       setLoading(true)
-    const response = await fetch('http://localhost:8077/api/profile', {
+      const response = await fetch('http://localhost:8077/api/profile', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
-       
+
       })
-    const data = await response.json()
-    setProfile(data)}
-    catch(error){
+      const data = await response.json()
+      setProfile(data)
+    }
+    catch (error) {
       console.log('error', error.message)
 
     } finally {
       setLoading(true)
     }
-    
-  
-  }
-  
 
-  const {data:profile, status, error} = useQuery('profile', getProfile)
+
+  }
+
+
+  const { data: profile, status, error } = useQuery('profile', getProfile)
 
 
 
   async function updateProfile() {
     try {
       setLoading(true)
-       const body ={ nickname, country, city, bio, avatar_url, website}
+      const body = { nickname, country, city, bio, avatar_url, website }
       await fetch('http://localhost:8077/api/profile/update', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    })
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
     } catch (error) {
       alert(error.message)
     } finally {

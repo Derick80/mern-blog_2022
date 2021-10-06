@@ -1,10 +1,11 @@
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
-import { Box, Button } from '@mui/material'
-import { likeUserProfile, calculateLikeCount } from '../hooks'
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
+import { Button } from '@mui/material'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
 import { useSession } from 'next-auth/client'
 import React from 'react'
-import Typography from '@mui/material/Typography'
+import { calculateLikeCount, likeUserProfile } from '../hooks'
 
 type Props = {
     profiles: UserProfile
@@ -13,11 +14,10 @@ type Props = {
 const LikeUserProfile = ({ profiles }: Props) => {
     const [session] = useSession()
     const hasLiked = profiles.likes.find((like) => like.userId === session?.id)
-    // console.log('HASLIKED', hasLiked)
-    // console.log(session)
+
     if (hasLiked?.likeType === 'LIKED') {
         return (
-            <Box component="div">
+            <Stack direction="row" spacing={3}>
                 <Button
                     variant='outlined'
                     color='info'
@@ -26,16 +26,16 @@ const LikeUserProfile = ({ profiles }: Props) => {
                     <ThumbUpIcon />
                 </Button>
                 <Typography variant='h6'>{calculateLikeCount(profiles.likes)}</Typography>
-            </Box>
+            </Stack>
         )
     } else {
         return (
-            <>
+            <Stack direction="row" spacing={3}>
                 <Button variant='outlined' onClick={() => likeUserProfile(profiles.id, 'LIKED')}>
                     <ThumbUpOffAltIcon />
                 </Button>
                 <Typography variant='h6'>{calculateLikeCount(profiles.likes)}</Typography>
-            </>
+            </Stack>
         )
     }
 }

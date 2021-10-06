@@ -90,6 +90,7 @@ interface UserProfile {
   website: string
   likes: Like[]
   [users: User]: User
+  views: number
 }
 
 interface DeProfile {

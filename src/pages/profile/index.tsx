@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { getUserProfile } from '../../hooks'
 import UserProfileCard from "../../components/UserProfileCard";
 import CreateProfile from "./create";
+import ProfileForm from "../../components/ProfileForm";
 
 const UserProfile = () => {
   const [session] = useSession();
@@ -25,11 +26,11 @@ const UserProfile = () => {
   } else if (status === "loading") {
     return <div>profile is loading</div>;
   } else if (status === "success" && !profile.profile) {
-    return <CreateProfile />;
+    return <ProfileForm />;
   } else if (status === "success" && profile) {
     return (
       <>
-        <UserProfileCard {...profile} />
+        <ProfileForm {...profile} />
       </>
     );
   } else {

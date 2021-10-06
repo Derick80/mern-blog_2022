@@ -1,3 +1,4 @@
+import Stack from "@mui/material/Stack";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -14,11 +15,13 @@ export default function ButtonAppBar() {
     return (
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" color="transparent">
-          <Toolbar>
+          <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Stack direction="row" spacing={2}>
 
-            <Button variant="contained" component={Link} noLinkStyle href="/">
-              Main Feed{" "}
-            </Button>
+              <Button variant="contained" component={Link} noLinkStyle href="/">
+                Main Feed{" "}
+              </Button>
+            </Stack>
             <Typography
               variant="h6"
               component="div"
@@ -41,54 +44,59 @@ export default function ButtonAppBar() {
   } else {
     return (
       <Box sx={{ flexGrow: 1 }}>
+
         <AppBar position="static" color="secondary">
-          <Toolbar>
+          <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
 
-
-            <Button variant="contained" component={Link} noLinkStyle href="/">
-              Feed Page{" "}
-            </Button>
-            <Button
-              variant="contained"
-              component={Link}
-              noLinkStyle
-              href="/post/create"
-            >
-              Create a Post{" "}
-            </Button>
-            <Button
-              variant="contained"
-              component={Link}
-              noLinkStyle
-              href="/post/drafts"
-            >
-              My Drafts{" "}
-            </Button>
-            <Button
-              variant="contained"
-              component={Link}
-              noLinkStyle
-              href="/profiles"
-            >
-              Bloggers Profiles{" "}
-            </Button>
+            <Stack direction="row" spacing={2}>
+              <Button variant="contained" component={Link} noLinkStyle href="/">
+                Feed Page{" "}
+              </Button>
+              <Button
+                variant="contained"
+                component={Link}
+                noLinkStyle
+                href="/post/create"
+              >
+                Create a Post{" "}
+              </Button>
+              <Button
+                variant="contained"
+                component={Link}
+                noLinkStyle
+                href="/post/drafts"
+              >
+                My Drafts{" "}
+              </Button>
+              <Button
+                variant="contained"
+                component={Link}
+                noLinkStyle
+                href="/profiles"
+              >
+                Bloggers Profiles{" "}
+              </Button>
+            </Stack>
             <Typography
               variant="h6"
               component="div"
               sx={{ flexGrow: 1 }}
             ></Typography>
-            <Button
-              variant="contained"
-              component={Link}
-              noLinkStyle
-              href="/profile"
-            >
-              My Profile{" "}
-            </Button>
-            <Box> you are logged in as {session?.user?.email}</Box>
-            <Button onClick={() => signOut()} color="inherit">
-              LogOut
-            </Button>
+            <Stack direction="row" spacing={2}>
+
+              <Button
+                variant="outlined"
+                component={Link}
+                noLinkStyle
+                href="/profile"
+              >
+                My Profile{" "}
+              </Button>
+              <Box> you are logged in as {session?.user?.email}</Box>
+              <Button onClick={() => signOut()} color="inherit">
+                LogOut
+              </Button>
+            </Stack>
           </Toolbar>
         </AppBar>
       </Box>

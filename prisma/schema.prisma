@@ -71,6 +71,7 @@ model UserProfile {
   likes        Like[]
   updatedAt    DateTime   @default(now())
   favorites    Favorite[]
+  views        Int        @default(0)
 }
 
 model Like {

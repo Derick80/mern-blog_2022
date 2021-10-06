@@ -4,7 +4,6 @@ import React from 'react'
 import { deletePost, editPost } from '../hooks'
 
 
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 type Props = {
     id: number

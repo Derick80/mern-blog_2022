@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query'
 import Router from 'next/router'
 
+//Create a Post -- working *
 const createPost = async (title: string, content: string) => {
   const body = { title, content }
   await fetch(`http://localhost:8077/api/post`, {
@@ -10,14 +11,14 @@ const createPost = async (title: string, content: string) => {
   })
   await Router.push('/post/drafts')
 }
-
+// Publish a draft of a post -- working *
 async function publishPost(id: number): Promise<void> {
   await fetch(`http://localhost:8077/api/post/publish/${id}`, {
     method: 'PUT',
   })
   await Router.push('/')
 }
-// calculate likes as they are submitted
+// calculate likes as they are submitted -- working *
 const calculateLikeCount = (likes: any[]) => {
   const addLike = likes.filter((like) => like.likeType === 'LIKED')
   const minusLike = likes.filter((like) => like.likeType === 'UNLIKED')
@@ -25,7 +26,7 @@ const calculateLikeCount = (likes: any[]) => {
   const likeCount = addLike.length - minusLike.length
   return likeCount
 }
-// like or unlike a post with this function
+// like or unlike a post with this function -- working *
 async function likePost(postId: number, type: string): Promise<void> {
   const body = { postId, type }
   await fetch(`http://localhost:8077/api/post/like`, {

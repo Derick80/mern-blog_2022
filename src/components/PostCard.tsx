@@ -1,14 +1,11 @@
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
 import { Button, Divider, Grid } from '@mui/material'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import { Box } from '@mui/system'
 import { useSession } from "next-auth/client"
-import Router from 'next/router'
-import React, { useState } from 'react'
-import { deletePost, editPost, likePost, publishPost } from '../hooks'
+import React from 'react'
+import { deletePost, publishPost } from '../hooks'
 import LikePost from './LikePost'
 import PostUsersCard from './PostUsersCard'
 
@@ -38,20 +35,22 @@ const PostCard = ({ post }: Props) => {
 
         <Card component="div" key={post.id} sx={{ gridArea: 'main', display: 'block' }}>
           <CardContent>
-            <Typography variant="h6" sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            <Typography variant="h6" color="text.primary" gutterBottom>
               {title}
             </Typography>
             <Divider />
-            <Typography variant="body2">
+            <Typography variant="body1">
               {content}
             </Typography>
-            <Typography variant="subtitle1">
+            <Typography variant="caption">
               <br />
               Written by  {authorName}
             </Typography>
           </CardContent>
           <CardActions >
+
             <LikePost post={post} />
+
             <Typography
               variant="h6"
               component="div"
