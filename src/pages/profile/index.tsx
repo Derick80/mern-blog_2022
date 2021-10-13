@@ -26,11 +26,11 @@ const UserProfile = () => {
   } else if (status === "loading") {
     return <div>profile is loading</div>;
   } else if (status === "success" && !profile.profile) {
-    return <ProfileForm />;
+    return <CreateProfile />;
   } else if (status === "success" && profile) {
     return (
       <>
-        <ProfileForm {...profile} />
+        <UserProfileCard {...profile} />
       </>
     );
   } else {

@@ -33,7 +33,7 @@ const PostCard = ({ post }: Props) => {
 
       >
 
-        <Card component="div" key={post.id} sx={{ gridArea: 'main', display: 'block' }}>
+        <Card component="div" key={post.id} sx={{ gridArea: 'main', display: 'block', boxShadow: 1 }}>
           <CardContent>
             <Typography variant="h6" color="text.primary" gutterBottom>
               {title}

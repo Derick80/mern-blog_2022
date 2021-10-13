@@ -2,12 +2,14 @@
 node_modules
 # Keep environment variables out of version control
 .env
-
+*.yarn
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
 
+*.yarn.lock
+.yarnrc.yml
 # testing
 /coverage
 

@@ -29,7 +29,6 @@ export default function Draft() {
       autoComplete='off'
       onSubmit={onSubmit}
     >
-      <Toolbar />
       <Box>
         <TextField
           required
