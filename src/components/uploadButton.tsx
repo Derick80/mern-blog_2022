@@ -8,17 +8,16 @@ export type UploadButtonProps = {
 export default function UploadButton(props: UploadButtonProps) {
   return (
     <div>
-      <label htmlFor="contained-button-file">
+      <label htmlFor='contained-button-file'>
         {props.loading ? 'Uploading ...' : 'Upload'}
       </label>
       <input
         style={{
-          visibility: 'hidden',
           position: 'absolute',
         }}
-        type="file"
-        id="single"
-        accept="image/*"
+        type='file'
+        id='single'
+        accept='image/*'
         onChange={props.onUpload}
         disabled={props.loading}
       />

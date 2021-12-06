@@ -11,7 +11,6 @@ import Button from '@mui/material/Button'
 import { Typography } from '@mui/material'
 import Link from '../../components/Link'
 
-
 const CreateProfile: React.FC = () => {
   const [nickname, setNickname] = useState<string>('')
   const [country, setCountry] = useState<string>('')
@@ -113,13 +112,8 @@ const CreateProfile: React.FC = () => {
       <Button disabled={!nickname || !country || !city || !bio} type='submit'>
         Create{' '}
       </Button>
-      <Button
-        variant="contained"
-        component={Link}
-        noLinkStyle
-        href="/profiles"
-      >
-        or Cancel{" "}
+      <Button variant='contained' component={Link} noLinkStyle href='/profile'>
+        or Cancel{' '}
       </Button>
       <a href='#' onClick={() => Router.push('/profile')}>
         or Cancel

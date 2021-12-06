@@ -1,12 +1,13 @@
 import { getSession, session } from 'next-auth/client'
 import { ChangeEvent, useState } from 'react'
-import { DEFAULT_AVATARS_BUCKET } from '../utils/constants'
-import { supabase } from '../utils/sup'
-import Avatar from './Avatar'
-import UploadButton from './uploadButton'
+import { DEFAULT_AVATARS_BUCKET } from '../src/utils/constants'
+import { supabase } from '../src/utils/sup'
+import Avatar from '../src/components/UserAvatar'
+import UploadButton from '../src/components/uploadButton'
+import { signOut, useSession } from 'next-auth/client'
 
 import { useQuery } from 'react-query'
-
+import UserAvatar from '../src/components/UserAvatar'
 
 export default function Account() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -19,9 +20,6 @@ export default function Account() {
   const [city, setCity] = useState<string | null>(null)
   const [bio, setBio] = useState<string | null>(null)
   const [id, setId] = useState<number>(0)
-
-
-
 
   async function uploadAvatar(event: ChangeEvent<HTMLInputElement>) {
     try {
@@ -53,7 +51,6 @@ export default function Account() {
     }
   }
 
-
   function setProfile(profile: UserProfile) {
     setId(profile?.id)
     setAvatarUrl(profile?.avatar_url)
@@ -64,34 +61,23 @@ export default function Account() {
     setWebsite(profile?.website)
   }
 
-
-
   async function getProfile() {
-
     try {
       setLoading(true)
       const response = await fetch('http://localhost:8077/api/profile', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
-
       })
       const data = await response.json()
       setProfile(data)
-    }
-    catch (error) {
+    } catch (error) {
       console.log('error', error.message)
-
     } finally {
       setLoading(true)
     }
-
-
   }
 
-
   const { data: profile, status, error } = useQuery('profile', getProfile)
-
-
 
   async function updateProfile() {
     try {
@@ -110,51 +96,55 @@ export default function Account() {
   }
 
   return (
-    <div className="account">
+    <div className='account'>
       <div>
-        <label htmlFor="avatar">Avatar image</label>
-        <div className="avatarField">
-          <div className="avatarContainer">
-            {avatar ? (
-              <Avatar url={avatar} size={35} />
+        <label htmlFor='avatar'>Avatar image</label>
+        <div className='avatarField'>
+          <div className='avatarContainer'>
+            {avatar_url ? (
+              <UserAvatar url={avatar_url} />
             ) : (
-              <div className="avatarPlaceholder">?</div>
+              <div className='avatarPlaceholder'>?</div>
             )}
           </div>
           <UploadButton onUpload={uploadAvatar} loading={uploading} />
         </div>
       </div>
       <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={session.user.email} disabled />
+        <label htmlFor='email'>Email</label>
+        <input id='email' type='text' value={session.user.email} disabled />
       </div>
       <div>
-        <label htmlFor="username">Name</label>
+        <label htmlFor='username'>Name</label>
         <input
-          id="username"
-          type="text"
+          id='username'
+          type='text'
           value={username || ''}
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
       <div>
-        <label htmlFor="website">Website</label>
+        <label htmlFor='website'>Website</label>
         <input
-          id="website"
-          type="website"
+          id='website'
+          type='website'
           value={website || ''}
           onChange={(e) => setWebsite(e.target.value)}
         />
       </div>
 
       <div>
-        <button className="button block primary" onClick={() => updateProfile()} disabled={loading}>
+        <button
+          className='button block primary'
+          onClick={() => updateProfile()}
+          disabled={loading}
+        >
           {loading ? 'Loading ...' : 'Update'}
         </button>
       </div>
 
       <div>
-        <button className="button block" onClick={() => signOut()}>
+        <button className='button block' onClick={() => signOut()}>
           Sign Out
         </button>
       </div>

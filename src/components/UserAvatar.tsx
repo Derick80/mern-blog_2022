@@ -1,16 +1,15 @@
 import { useEffect, useState, ChangeEvent } from 'react'
 import Image from 'next/image'
 import { supabase } from '../utils/sup'
+import { Avatar } from '@mui/material'
 
 type AvatarProps = {
-  url: string,
+  url: string
   onUpload: Function
-  uploadAvatar: (event: ChangeEvent<HTMLInputElement>) => Promise<void>
 }
 
 function UserAvatar({ url }: { url: string | null }) {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
-
 
   useEffect(() => {
     if (url) downloadImage(url)
@@ -18,7 +17,9 @@ function UserAvatar({ url }: { url: string | null }) {
 
   async function downloadImage(path) {
     try {
-      const { data, error } = await supabase.storage.from('images').download(path)
+      const { data, error } = await supabase.storage
+        .from('images')
+        .download(path)
       if (error) {
         throw error
       }
@@ -29,21 +30,10 @@ function UserAvatar({ url }: { url: string | null }) {
     }
   }
 
-
-
-  return (
-    avatarUrl ? (
-
-      <Image
-        src={avatarUrl}
-        alt="Avatar"
-        width='80'
-        height='80'
-
-      />
-    ) : (
-      <div className="avatar no-image" />
-    )
+  return avatarUrl ? (
+    <Avatar src={avatarUrl} alt='Avatar' sx={{ width: 56, height: 56 }} />
+  ) : (
+    <div className='avatar no-image' />
   )
 }
 

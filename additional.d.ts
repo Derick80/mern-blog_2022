@@ -6,12 +6,14 @@ type UserProfilePageProps = {
   city: string
   bio: string
   favorite?: number
+  views: number
   user: {
     id: number
     name: string
     email: string
     image: string
   } | null
+  likes: Like[]
 }
 
 interface LikeProps {
@@ -104,6 +106,8 @@ interface DeProfile {
   profileViews: number
   reatedAt: object | null
   updatedAt: object | null
+  likes: Like[]
+  views: number
   profile: {
     id: number
     avatar_url: string
@@ -114,6 +118,8 @@ interface DeProfile {
     userId: number
     updatedAt: object | null
     website: string
+    likes: Like[]
+    views: number
   }
 }
 
@@ -125,6 +131,7 @@ interface User {
   email: string
   emailVerified: string
   image: string
+  views: number
   profileViews: number
   [likedPosts: Post]: Post
   [likedComments: Comment]: Comment
