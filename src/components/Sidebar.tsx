@@ -10,14 +10,10 @@ const Sidebar = () => {
   const [session] = useSession()
 
   return (
-    <Grid item xs={12} md={4}>
+    <div className="side_bar">
 
-      <Paper elevation={0} sx={{ p: 2, bgcolor: 'grey.200' }}>
-        <Typography variant="h6" gutterBottom >
-          Oh haiyo
-        </Typography>
-      </Paper>
-    </Grid>
+
+    </div>
 
   )
 }

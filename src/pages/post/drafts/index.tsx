@@ -1,6 +1,6 @@
 import React from 'react'
 import { GetServerSideProps } from 'next'
-import PostCard from '../../../components/PostCard'
+import PostCard from '../../../components/post/PostCard'
 import { useSession, getSession } from 'next-auth/client'
 import prisma from '../../../utils/prisma'
 import { Alert, Typography } from '@mui/material'

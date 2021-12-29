@@ -30,3 +30,17 @@ declare module 'next-auth' {
   /** The OAuth profile returned from your provider */
   interface Profile {}
 }
+
+declare module '@mui/material/styles' {
+  interface Theme {
+    status: {
+      danger: string
+    }
+  }
+  // allow configuration using `createTheme`
+  interface ThemeOptions {
+    status?: {
+      danger?: string
+    }
+  }
+}

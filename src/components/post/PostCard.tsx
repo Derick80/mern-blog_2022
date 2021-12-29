@@ -1,13 +1,11 @@
-import { Button, Divider, Grid } from '@mui/material'
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
+import { Button, Grid } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { useSession } from "next-auth/client"
 import React from 'react'
-import { deletePost, publishPost } from '../hooks'
-import LikePost from './LikePost'
-import PostUsersCard from './PostUsersCard'
+import { calculateLikeCount, deletePost, publishPost } from '../../hooks'
+import LikeBox from '../LikeBox'
+import PostUsersCard from '../PostUsersCard'
+
 
 
 
@@ -33,24 +31,22 @@ const PostCard = ({ post }: Props) => {
 
       >
 
-        <Card component="div" key={post.id} sx={{ gridArea: 'main', display: 'block', boxShadow: 1 }}>
-          <CardContent>
-            <Typography variant="h6" color="text.primary" gutterBottom>
-              {title}
-            </Typography>
-            <Divider />
-            <Typography variant="body1">
-              {content}
-            </Typography>
-            <Typography variant="caption">
-              <br />
-              Written by  {authorName}
-            </Typography>
-          </CardContent>
-          <CardActions >
+        <div className="card" key={post.id} >
+          <div className="card_body">
+            <div className="card_header">{title}</div>
+            <div className="card_body">
+              <p> {content}</p>
 
-            <LikePost post={post} />
+              <p >
+                <br />
+                Written by  {authorName}
+              </p>
+            </div>
+          </div>
+          <div className="card_actions" >
 
+            <LikeBox post={post} />
+            <Typography variant='h6'>{calculateLikeCount(post.likes)}</Typography>
             <Typography
               variant="h6"
               component="div"
@@ -68,8 +64,8 @@ const PostCard = ({ post }: Props) => {
               <PostUsersCard id={id} />
             )}
 
-          </CardActions>
-        </Card>
+          </div>
+        </div>
 
       </Grid>
     )
@@ -85,20 +81,17 @@ const PostCard = ({ post }: Props) => {
       >
 
 
-        <Card component="div" key={post.id} sx={{ gridArea: 'main', display: 'block' }}>
-          <CardContent>
-            <Typography variant="h6" sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-              {title}
-            </Typography>
-            <Typography variant="body2">
-              {content}
-            </Typography>
-            <Typography variant="subtitle1">
+        <div className="card" key={post.id} >
+          <div className="card_header">{title}</div>
+          <div className="card_body">
+            <p> {content}</p>
+
+            <p >
               <br />
               Written by  {authorName}
-            </Typography>
-          </CardContent>
-          <CardActions >
+            </p>
+          </div>
+          <div className="card_actions" >
 
             <Typography
               variant="h6"
@@ -114,8 +107,8 @@ const PostCard = ({ post }: Props) => {
               </div>
             )}
 
-          </CardActions>
-        </Card>
+          </div>
+        </div>
 
 
 

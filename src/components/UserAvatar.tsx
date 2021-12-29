@@ -15,7 +15,7 @@ function UserAvatar({ url }: { url: string | null }) {
     if (url) downloadImage(url)
   }, [url])
 
-  async function downloadImage(path) {
+  async function downloadImage(path: string) {
     try {
       const { data, error } = await supabase.storage
         .from('images')

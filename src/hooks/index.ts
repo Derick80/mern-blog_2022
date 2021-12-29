@@ -2,7 +2,11 @@ import { useQuery } from 'react-query'
 import Router from 'next/router'
 
 //Create a Post -- working *
-const createPost = async (title: string, content: string) => {
+const createPost = async (
+  title: string,
+  content: string,
+  postImage: string
+) => {
   const body = { title, content }
   await fetch(`http://localhost:8077/api/post`, {
     method: 'POST',

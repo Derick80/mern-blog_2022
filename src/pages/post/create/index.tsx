@@ -1,49 +1,43 @@
 import React, { useState } from 'react'
-import Router from 'next/router'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
-import Toolbar from '../../../components/editor/Toolbar'
+import UploadButton from '../../../components/uploadButton'
 import { createPost } from '../../../hooks'
 
 export default function Draft() {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-
+  const [postImage, setPostImage] = useState('')
+  const [upLoading, setUpLoading] = useState()
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     try {
-      createPost(title, content)
+      createPost(title, content, postImage)
     } catch (error) {
       console.error(error)
     }
   }
 
   return (
-    <Box
-      component='form'
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
-      }}
-      noValidate
-      autoComplete='off'
+    <form className='post_form'
+
       onSubmit={onSubmit}
     >
-      <Box>
-        <TextField
-          required
-          id='outlined-required'
-          label='Title'
+      <div className='form_body'>
+        <label>Post Title</label>
+        <input type='text'
+
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <TextField
-          id='outlined-disabled'
+        <label>Post Content</label>
+        <input type='text'
+
           onChange={(e) => setContent(e.target.value)}
           value={content}
         />
-      </Box>
-      <Button type='submit'>Submit</Button>
-    </Box>
+      </div>
+      <button type='submit'>Submit</button>
+
+      <UploadButton />
+    </form>
   )
 }
