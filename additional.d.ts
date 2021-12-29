@@ -28,6 +28,7 @@ interface LikeProps {
 interface PostProps {
   id: number
   title: string
+  postImage?: string | null | undefined
   author: {
     name: string
     email: string
@@ -145,4 +146,5 @@ interface User {
 interface PostFormInput {
   title: String
   content: String
+  postImage: String
 }

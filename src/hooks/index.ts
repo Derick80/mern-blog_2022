@@ -7,7 +7,7 @@ const createPost = async (
   content: string,
   postImage: string
 ) => {
-  const body = { title, content }
+  const body = { title, content, postImage }
   await fetch(`http://localhost:8077/api/post`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

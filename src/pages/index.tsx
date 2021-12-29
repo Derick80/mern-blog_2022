@@ -38,7 +38,7 @@ const Index = (props: Props) => {
   return (
 
 
-    <div className="content" >
+    <div className="card_container">
       {props.feed.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}

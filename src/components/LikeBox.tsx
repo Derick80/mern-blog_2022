@@ -29,11 +29,16 @@ export default function LikeBox({ post }: Props) {
             inputText = 'LIKED'
     }
     return (
-        <button className="btn" type="button" role="switch" aria-checked={aria}
+        <div className="like_box">
 
-            onClick={() => likePost(post.id, inputText)}>
+            <button className="btn" type="button" role="switch" aria-checked={aria}
 
-            <span className={specialClassName}>{contentText}</span>
-        </button>
+                onClick={() => likePost(post.id, inputText)}>
+
+                <span className={specialClassName}>{contentText}</span>
+            </button>
+
+        </div>
+
     )
 }
