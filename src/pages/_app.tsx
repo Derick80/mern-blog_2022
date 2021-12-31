@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Hydrate } from 'react-query/hydration';
 import AppBar from '../components/AppBar';
-import Sidebar from '../components/Sidebar';
+
 import '../styles/global.css';
 
 
@@ -29,7 +29,7 @@ function MyApp(props: AppProps) {
 
             <AppBar />
             <Component {...pageProps} />
-            <Sidebar />
+
           </div>
 
 

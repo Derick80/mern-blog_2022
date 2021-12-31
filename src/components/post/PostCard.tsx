@@ -63,46 +63,36 @@ const PostCard = ({ post }: Props) => {
   } else {
 
     return (
-      <Grid item
-        xs={12}
-        md={8}
-        sx={{}}
+      <div className="card" key={post.id} >
+        <div className="card_header card_image">
+          <PostImage url={postImage} />
+        </div>
+        <h2 className="card_header">{title}</h2>
+        <div className="card_body">
+          <p> {content}</p>
 
-      >
-
-
-        <div className="card" key={post.id} >
-          <div className="card_header">{title}</div>
-          <div className="card_body">
-            <p> {content}</p>
-
-            <p >
-              <br />
-              Written by  {authorName}
-            </p>
-          </div>
-          <div className="card_actions" >
-
-            <Typography
-              variant="h6"
-
-
-            ></Typography>
-            {userHasValidSession && postBelongsToUser && (
-              <div>
-                {' '}
-                <Button component="span" sx={{ display: 'inline' }} variant="contained" color="primary" onClick={() => publishPost(id)}>Publish</Button>
-
-                <Button component="span" sx={{ display: 'inline' }} variant="contained" color="primary" onClick={() => deletePost(id)}>Delete</Button>
-              </div>
-            )}
-
-          </div>
+          <p >
+            <br />
+            Written by  {authorName}
+          </p>
         </div>
 
+        <div className="card_footer" >
+          {userHasValidSession && postBelongsToUser && (
+            <div>
+              {' '}
+              <Button component="span" sx={{ display: 'inline' }} variant="contained" color="primary" onClick={() => publishPost(id)}>Publish</Button>
+
+              <Button component="span" sx={{ display: 'inline' }} variant="contained" color="primary" onClick={() => deletePost(id)}>Delete</Button>
+            </div>
+          )}
+
+        </div>
+      </div>
 
 
-      </Grid>
+
+
 
     )
   }

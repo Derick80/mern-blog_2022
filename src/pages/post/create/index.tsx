@@ -50,28 +50,33 @@ export default function Draft() {
     }
   }
   return (
-    <form className='post_form'
+    <div className='post_form_container'>
+      <h2>Create a new Blog Post</h2>
+      <form onSubmit={onSubmit}>
 
-      onSubmit={onSubmit}
-    >
-      <div className='form_body'>
-        <label>Post Title</label>
+        <label>Blog Post Title:</label>
         <input type='text'
-
+          required
+          placeholder="Post Title"
+          autoFocus={true}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <label>Post Content</label>
-        <input type='text'
-
+        <label>Blog Contents:</label>
+        <textarea
+          placeholder="Write your post here"
+          required
+          cols="30"
+          rows='10'
           onChange={(e) => setContent(e.target.value)}
           value={content}
-        />
-      </div>
+        ></textarea>
 
-      <button type='submit'>Submit</button>
-      <UploadButton onUpload={uploadPostImage} loading={uploading} />
 
-    </form>
+
+        <UploadButton onUpload={uploadPostImage} loading={uploading} />
+        <button type='submit'>Continue</button>
+      </form>
+    </div>
   )
 }

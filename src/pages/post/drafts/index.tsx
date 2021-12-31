@@ -33,7 +33,7 @@ type Props = {
   drafts: PostProps[]
 }
 
-const Drafts: React.FC<Props> = (props) => {
+const Drafts = (props: Props) => {
   const [session] = useSession()
 
   if (!session) {
@@ -45,14 +45,12 @@ const Drafts: React.FC<Props> = (props) => {
   }
 
   return (
-    <Box sx={{ p: 1, m: 2 }}>
-      <Typography variant='h3' gutterBottom component='div'>
-        My Drafts
-      </Typography>
+    <div className="card_container">
+
       {props.drafts.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
-    </Box>
+    </div>
   )
 }
 
