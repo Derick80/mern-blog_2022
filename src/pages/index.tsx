@@ -1,6 +1,7 @@
 import { GetStaticProps } from 'next'
 import React from 'react'
 import PostCard from '../components/post/PostCard'
+import Posts from '../components/post/Posts'
 import prisma from '../utils/prisma'
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -40,7 +41,7 @@ const Index = (props: Props) => {
 
     <div className="card_container">
       {props.feed.map((post) => (
-        <PostCard key={post.id} post={post} />
+        <Posts key={post.id} post={post} />
       ))}
 
 

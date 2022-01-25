@@ -37,11 +37,7 @@ interface PostProps {
   authorId: number
   content: string
   published: boolean
-  comments: {
-    id: number
-    content: string
-    author: string
-  }
+  comments: []
   categories: []
   views: number
   likes: Like[]
@@ -52,24 +48,14 @@ interface PostProps {
 
   updatedAt: object | null
 }
-type CommentProps = {
+
+interface Comment {
   id: number
-  author: {
-    name: string
-    email: string
-    image: string
-  } | null
+  author: string
   authorId: number
   postId: number
   content: string
-  published: boolean
-  comments: []
-  categories: []
-  views: number
-  likes: number
-  createdAt: object | null
-
-  updatedAt: object | null
+  createdAt: string
 }
 
 type CategoryProps = {

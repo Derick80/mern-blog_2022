@@ -9,6 +9,7 @@ import LikeBox from '../LikeBox'
 import PostUsersCard from '../PostUsersCard'
 import { Avatar } from '@mui/material'
 import PostImage from '../PostImage'
+import Comments from '../comment/Comments'
 
 
 
@@ -18,7 +19,7 @@ type Props = {
 const PostCard = ({ post }: Props) => {
 
   const [session] = useSession();
-  const { id, title, content, author, likes, published, views, postImage } = post
+  const { id, title, content, author, likes, published, views, postImage, comments } = post
 
 
 
@@ -55,6 +56,7 @@ const PostCard = ({ post }: Props) => {
           )}
 
         </div>
+
       </div>
 
 

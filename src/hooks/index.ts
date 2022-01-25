@@ -135,6 +135,19 @@ async function deletePost(id: number): Promise<void> {
   await Router.push('/')
 }
 
+const createComment = async (
+  e: React.SyntheticEvent,
+  id: number,
+  content: string
+): Promise<void> => {
+  e.preventDefault()
+  const body = { content }
+  const response = await fetch(`http://localhost:8077/api/comments`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+}
 export {
   useProfile,
   getProfiles,
@@ -148,4 +161,5 @@ export {
   createUserProfile,
   updateUserProfile,
   likeUserProfile,
+  createComment,
 }

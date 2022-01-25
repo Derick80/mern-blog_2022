@@ -32,7 +32,7 @@ function PostImage({ url }: { url: string | null }) {
     }
 
     return postImageUrl ? (
-        <img src={postImageUrl} alt='Avatar' />
+        <img className="post_image" src={postImageUrl} alt='Avatar' />
     ) : (
         <div className='avatar no-image' />
     )
