@@ -50,10 +50,10 @@ export default function Draft() {
     }
   }
   return (
-    <div className='post_form_container'>
-      <h2>Create a new Blog Post</h2>
-      <form onSubmit={onSubmit}>
+    < >
 
+      <form className='post_form_container' onSubmit={onSubmit}>
+        <h5>Create a new Blog Post</h5>
         <label>Blog Post Title:</label>
         <input type='text'
           required
@@ -66,7 +66,7 @@ export default function Draft() {
         <textarea
           placeholder="Write your post here"
           required
-          cols="30"
+          cols="100"
           rows='10'
           onChange={(e) => setContent(e.target.value)}
           value={content}
@@ -77,6 +77,6 @@ export default function Draft() {
         <UploadButton onUpload={uploadPostImage} loading={uploading} />
         <button type='submit'>Continue</button>
       </form>
-    </div>
+    </>
   )
 }

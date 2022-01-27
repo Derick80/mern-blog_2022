@@ -31,7 +31,8 @@ function UserAvatar({ url }: { url: string | null }) {
   }
 
   return avatarUrl ? (
-    <Avatar src={avatarUrl} alt='Avatar' sx={{ width: 56, height: 56 }} />
+    // eslint-disable-next-line @next/next/no-img-element
+    <img className="profile_image" src={avatarUrl} alt="avatar" />
   ) : (
     <div className='avatar no-image' />
   )

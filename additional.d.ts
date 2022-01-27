@@ -134,3 +134,14 @@ interface PostFormInput {
   content: String
   postImage: String
 }
+
+interface Like {
+  id: number
+  likeType: string
+  user: User[]
+  userId: number
+  post: Post[]
+  comments: Comment[]
+  postId: number
+  commentId: number
+}

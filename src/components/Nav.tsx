@@ -6,7 +6,7 @@ export default function Navigation() {
     const [session, loading] = useSession()
     if (!session) {
         return (
-            <div className='nav'>
+            <nav>
                 <ul className='nav_links'>
                     <li>
                         <Link href='/'>
@@ -20,11 +20,11 @@ export default function Navigation() {
                         </Link>
                     </li>
                 </ul>
-            </div>
+            </nav>
         )
     } else
         return (
-            <div className='nav'>
+            <nav>
                 <ul className='nav_links'>
                     <li>
                         <Link href='/'>
@@ -59,6 +59,6 @@ export default function Navigation() {
                         </Link>
                     </li>
                 </ul>
-            </div>
+            </nav>
         )
 }

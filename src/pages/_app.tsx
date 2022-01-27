@@ -30,8 +30,11 @@ function MyApp(props: AppProps) {
 
             <Navigation />
 
-            <Component {...pageProps} />
 
+            <div className="content_container">
+              <Component {...pageProps} />
+
+            </div>
             <footer>This is a footer</footer>
           </div>
 
