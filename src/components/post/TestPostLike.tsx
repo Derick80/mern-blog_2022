@@ -46,8 +46,7 @@ const Posts = ({ post }: Props) => {
             </div>
 
             <div className='card_footer'>
-                <LikeBox postId={post.id} likes={likes} />
-
+                <LikeWidget postId={id} />
                 <div className="count_box">
 
 
@@ -56,8 +55,7 @@ const Posts = ({ post }: Props) => {
                 </div>
 
             </div>
-
-            <LikeWidget likes={likes} />
+            <Comments comments={comments} />
         </div>
     )
 

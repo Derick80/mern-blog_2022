@@ -5,28 +5,26 @@ import { calculateLikeCount, likePost } from '../hooks'
 
 
 type Props = {
-    postId: number
-    likes: Like[]
+    post: PostProps
 }
 
-export default function LikeBox({ postId, likes }: Props) {
+export default function Favorite({ post }: Props) {
     const [session] = useSession()
-    const [inputStuff, setInputStuff] = useState()
-    const hasLiked = likes.find((like) => like.userId === session?.id)
+    const hasLiked = post.likes.find((like) => like.userId === session?.id)
 
 
     let specialClassName = 'material-icons'
-    let contentText = 'thumb_up'
+    let contentText = 'favorite'
     let inputText = ''
     let aria = false
     if (hasLiked?.likeType === 'LIKED') {
-        specialClassName += ' blue',
+        specialClassName += ' red',
             contentText
         aria = true,
             inputText = 'UNLIKE'
     } else {
-        specialClassName += '-outlined'
-        contentText
+        specialClassName
+        contentText += '_outline'
         aria = false,
             inputText = 'LIKED'
     }
@@ -35,13 +33,10 @@ export default function LikeBox({ postId, likes }: Props) {
 
             <button className="btn" type="button" role="switch" aria-checked={aria}
 
-                onClick={() => likePost(postId, inputText)}>
+                onClick={() => likePost(post.id, inputText)}>
 
                 <span className={specialClassName}>{contentText}</span>
-
-                Like
             </button>
-
 
         </div>
 

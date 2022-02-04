@@ -22,6 +22,20 @@ async function publishPost(id: number): Promise<void> {
   })
   await Router.push('/')
 }
+
+// get likes
+const getLikes = async () => {
+  const response = await fetch('http://localhost:8077/api/likes', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+  const data = await response.json()
+  const { likes } = data
+  return likes
+}
+const useLikes = () => {
+  return useQuery('likes', getLikes)
+}
 // calculate likes as they are submitted -- working *
 const calculateLikeCount = (likes: any[]) => {
   const addLike = likes.filter((like) => like.likeType === 'LIKED')
@@ -38,7 +52,6 @@ async function likePost(postId: number, type: string): Promise<void> {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   })
-  await Router.reload()
 }
 
 const getProfiles = async () => {
@@ -148,6 +161,15 @@ const createComment = async (
     body: JSON.stringify(body),
   })
 }
+
+// calculate likes as they are submitted -- working *
+const calculateViewCount = (likes: any[]) => {
+  const addLike = likes.filter((like) => like.likeType === 'LIKED')
+  const minusLike = likes.filter((like) => like.likeType === 'UNLIKED')
+
+  const likeCount = addLike.length - minusLike.length
+  return likeCount
+}
 export {
   useProfile,
   getProfiles,
@@ -162,4 +184,5 @@ export {
   updateUserProfile,
   likeUserProfile,
   createComment,
+  getLikes,
 }

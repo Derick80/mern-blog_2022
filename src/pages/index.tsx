@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next'
 import React from 'react'
+import LikeWidget from '../components/LikeWidget'
 import PostCard from '../components/post/PostCard'
 import Posts from '../components/post/Posts'
 import prisma from '../utils/prisma'
@@ -38,16 +39,17 @@ const Index = (props: Props) => {
 
   return (
 
+    <>
+      <div className="card_grid">
+        {props.feed.map((post) => (
+          <Posts key={post.id} post={post} />
+        ))}
 
-    <div className="card_grid">
-      {props.feed.map((post) => (
-        <Posts key={post.id} post={post} />
-      ))}
 
 
-
-    </div>
-
+      </div>
+      <LikeWidget />
+    </>
   )
 }
 

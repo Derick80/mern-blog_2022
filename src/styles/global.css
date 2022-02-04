@@ -97,11 +97,9 @@ footer {
 /* startregion secondary */
 .container {
   width: 100%;
-
   display: grid;
   grid-template-columns: repeat(3, [col-start] 1fr);
   grid-template-rows: auto;
-
   gap: 10px;
   row-gap: 1em;
   /* grid-template-rows: 10em 50vh, auto 10 em; */
@@ -114,7 +112,6 @@ footer {
 
 nav {
   grid-column: col-start 1 / 4;
-
   display: flex;
   height: 10vh;
   position: relative;
@@ -123,26 +120,17 @@ nav {
   font-size: var(--fs-body-1);
   overflow: hidden;
 }
+
 .nav_links,
 .nav_links_nav_right {
   opacity: 0;
 }
-.nav_links_nav_right {
-}
+
 .nav_links li,
 .nav_links_nav_right li {
   opacity: 0;
   font-size: var(--fs-H6);
 }
-
-/* .content_container {
-  grid-column: col-start / span 12;
-  grid-row: 2 / 3;
-  justify-content: center;
-  justify-items: center;
-  align-items: center;
-  align-content: center;
-} */
 
 .content_container {
   padding-top: 0;
@@ -150,8 +138,6 @@ nav {
 
   display: flex;
 
-}
-.card_container {
 }
 
 .card {
@@ -179,8 +165,7 @@ nav {
 .card_footer {
   padding: 0 var(--padding);
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+
 }
 .count_box {
   gap: 10px;
@@ -197,6 +182,7 @@ nav {
   text-decoration: underline;
   color: red;
 }
+
 .material-icons.red {
   color: red;
 }
@@ -204,6 +190,16 @@ nav {
 .material-icons {
   color: red;
 }
+
+.material-icons-outlined.blue  {
+  color: blue;
+}
+
+.material-icons.blue, p.material-icons.blue {
+ color: blue;
+
+}
+
 .material-icons:hover,
 .material-icons:focus {
   cursor: pointer;
@@ -243,6 +239,7 @@ nav {
   }
   footer {
     grid-column: col-start / 13;
+    bottom: 0;
   }
   nav {
     padding-top: 0;
@@ -349,8 +346,8 @@ nav {
 }
 
 .card_footer {
-  display: flex;
-  justify-content: flex-start;
+
+
 }
 .profile_image {
   display: block;
@@ -362,6 +359,11 @@ nav {
   object-position: center;
 }
 
+
+/* .like_box {
+  display:flex;
+  flex-direction: row;
+} */
 /* #endregion  mid media */
 /* #startregion large_media */
 @media (min-width: 50em) {

@@ -6,6 +6,7 @@ type Props = {
 }
 
 const Comment = ({ createComment }: Props) => {
+    const [toggleCommentForm, setToggleCommentForm] = useState(false)
     const [content, setContent] = useState('')
     return (<>
         <form onSubmit={createComment}>
