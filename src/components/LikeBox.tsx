@@ -5,16 +5,14 @@ import { calculateLikeCount, likePost } from '../hooks'
 
 
 type Props = {
-    postId: number
     likes: Like[]
 }
 
-export default function LikeBox({ postId, likes }: Props) {
+export default function LikeBox({ likes }: Props) {
     const [session] = useSession()
-    const [inputStuff, setInputStuff] = useState()
     const hasLiked = likes.find((like) => like.userId === session?.id)
 
-
+    const { postId } = likes
     let specialClassName = 'material-icons'
     let contentText = 'thumb_up'
     let inputText = ''

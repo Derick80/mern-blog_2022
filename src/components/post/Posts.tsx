@@ -11,6 +11,7 @@ import { Avatar } from '@mui/material'
 import PostImage from '../PostImage'
 import Comments from '../comment/Comments'
 import LikeWidget from '../LikeWidget'
+import ReactionBox from '../ReactionBox'
 
 type Props = {
     post: PostProps
@@ -46,6 +47,7 @@ const Posts = ({ post }: Props) => {
             </div>
 
             <div className='card_footer'>
+                <ReactionBox />
                 <LikeBox postId={post.id} likes={likes} />
 
                 <div className="count_box">
@@ -57,7 +59,6 @@ const Posts = ({ post }: Props) => {
 
             </div>
 
-            <LikeWidget likes={likes} />
         </div>
     )
 

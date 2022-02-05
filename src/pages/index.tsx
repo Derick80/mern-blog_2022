@@ -48,7 +48,7 @@ const Index = (props: Props) => {
 
 
       </div>
-      <LikeWidget />
+
     </>
   )
 }
