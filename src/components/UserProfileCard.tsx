@@ -8,49 +8,45 @@ import { useState } from 'react'
 import UserAvatar from './UserAvatar'
 import EditProfile from '../pages/profile/edit'
 
-const ProfileCard = ({ profile }: DeProfile) => {
-  const {
-    nickname,
-    country,
-    city,
-    bio,
-    avatar_url,
-    website,
+import Image from 'next/image'
 
-    updatedAt,
-  } = profile
+type Props = {
+  profile: UserProfile
+}
+const ProfileCard = ({ profile: { nickname,
+  country,
+  city,
+  bio,
+  avatar_url,
+  website,
+
+  updatedAt } }: Props) => {
+
 
   const lastUpdated = updatedAt ? new Date() : null
 
   return (
-    <>
-      <Card sx={{ maxWidth: 345 }}>
-        <UserAvatar url={avatar_url} />{' '}
-        <CardContent>
-          <Typography gutterBottom variant='h5' component='div'>
-            {nickname}
-          </Typography>
-          <Typography variant='body1' color='text.secondary'>
-            {bio}
-          </Typography>
-          <Typography gutterBottom variant='caption' component='div'>
-            {city}
-          </Typography>
-          <Typography gutterBottom variant='caption' component='div'>
-            {country}
-          </Typography>
-          <Typography gutterBottom variant='caption' component='div'>
-            {website}
-          </Typography>
-          <Typography gutterBottom variant='caption' component='div'>
-            Last updated{' '}
-            {lastUpdated
-              ? `${lastUpdated.toLocaleDateString()} ${lastUpdated.toLocaleTimeString()}`
-              : 'Never'}
-          </Typography>
-        </CardContent>
-      </Card>
-    </>
+    <div className="card_grid">
+      <div className="profile_card">
+        <div className="card_sidebar">
+          <UserAvatar url={avatar_url} />
+          <ul>
+            <li></li>
+          </ul>
+        </div>
+        <div className="card_body">
+          <h2 className="profile_name">{nickname}</h2>
+          <p className="profile_body">{bio}</p>
+          <p className="profile_city">{city}</p>
+          <p className="profile_country">{country}</p>
+          <p className="profile_website">{website}</p>
+        </div>
+        <div className="card_footer">
+          <p className="contact">email here email</p>
+          <p className="updated_at">last update at</p>
+        </div>
+      </div>
+    </div>
   )
 }
 

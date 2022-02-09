@@ -28,6 +28,7 @@ interface LikeProps {
 interface PostProps {
   id: number
   title: string
+  postImage?: string | null | undefined
   author: {
     name: string
     email: string
@@ -36,11 +37,7 @@ interface PostProps {
   authorId: number
   content: string
   published: boolean
-  comments: {
-    id: number
-    content: string
-    author: string
-  }
+  comments: []
   categories: []
   views: number
   likes: Like[]
@@ -51,24 +48,14 @@ interface PostProps {
 
   updatedAt: object | null
 }
-type CommentProps = {
+
+interface Comment {
   id: number
-  author: {
-    name: string
-    email: string
-    image: string
-  } | null
+  author: string
   authorId: number
   postId: number
   content: string
-  published: boolean
-  comments: []
-  categories: []
-  views: number
-  likes: number
-  createdAt: object | null
-
-  updatedAt: object | null
+  createdAt: string
 }
 
 type CategoryProps = {
@@ -145,4 +132,16 @@ interface User {
 interface PostFormInput {
   title: String
   content: String
+  postImage: String
+}
+
+interface Like {
+  id: number
+  likeType: string
+  user: User[]
+  userId: number
+  post: Post[]
+  comments: Comment[]
+  postId: number
+  commentId: number
 }

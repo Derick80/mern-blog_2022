@@ -2,8 +2,12 @@ import { useQuery } from 'react-query'
 import Router from 'next/router'
 
 //Create a Post -- working *
-const createPost = async (title: string, content: string) => {
-  const body = { title, content }
+const createPost = async (
+  title: string,
+  content: string,
+  postImage: string
+) => {
+  const body = { title, content, postImage }
   await fetch(`http://localhost:8077/api/post`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -17,6 +21,20 @@ async function publishPost(id: number): Promise<void> {
     method: 'PUT',
   })
   await Router.push('/')
+}
+
+// get likes
+const getLikes = async () => {
+  const response = await fetch('http://localhost:8077/api/likes', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+  const data = await response.json()
+  const { likes } = data
+  return likes
+}
+const useLikes = () => {
+  return useQuery('likes', getLikes)
 }
 // calculate likes as they are submitted -- working *
 const calculateLikeCount = (likes: any[]) => {
@@ -34,7 +52,6 @@ async function likePost(postId: number, type: string): Promise<void> {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   })
-  await Router.reload()
 }
 
 const getProfiles = async () => {
@@ -131,6 +148,28 @@ async function deletePost(id: number): Promise<void> {
   await Router.push('/')
 }
 
+const createComment = async (
+  e: React.SyntheticEvent,
+  id: number,
+  content: string
+): Promise<void> => {
+  e.preventDefault()
+  const body = { content }
+  const response = await fetch(`http://localhost:8077/api/comments`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+}
+
+// calculate likes as they are submitted -- working *
+const calculateViewCount = (likes: any[]) => {
+  const addLike = likes.filter((like) => like.likeType === 'LIKED')
+  const minusLike = likes.filter((like) => like.likeType === 'UNLIKED')
+
+  const likeCount = addLike.length - minusLike.length
+  return likeCount
+}
 export {
   useProfile,
   getProfiles,
@@ -144,4 +183,6 @@ export {
   createUserProfile,
   updateUserProfile,
   likeUserProfile,
+  createComment,
+  getLikes,
 }

@@ -14,7 +14,7 @@ export default function ButtonAppBar() {
   if (!session) {
     return (
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" color="transparent">
+        <div className="nav_bar">
           <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Stack direction="row" spacing={2}>
 
@@ -38,14 +38,15 @@ export default function ButtonAppBar() {
               Login
             </Button>
           </Toolbar>
-        </AppBar>
+        </div >
       </Box>
     );
   } else {
     return (
       <Box sx={{ flexGrow: 1 }}>
 
-        <AppBar position="static" color="secondary">
+        <div className="nav_bar" >
+
           <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
 
             <Stack direction="row" spacing={2}>
@@ -98,7 +99,7 @@ export default function ButtonAppBar() {
               </Button>
             </Stack>
           </Toolbar>
-        </AppBar>
+        </div >
       </Box>
     );
   }

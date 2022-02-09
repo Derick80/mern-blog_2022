@@ -25,7 +25,7 @@ const UserProfiles = () => {
 
 
 
-
+    console.log(profiles)
 
     if (!session) {
         return (

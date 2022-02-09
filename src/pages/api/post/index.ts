@@ -6,7 +6,7 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { title, content } = req.body
+  const { title, content, postImage } = req.body
 
   const session = await getSession({ req })
 
@@ -22,6 +22,7 @@ export default async function handle(
     data: {
       title: title,
       content: content,
+      postImage: postImage,
       author: { connect: { email: session?.user?.email } },
       likes: {
         create: {

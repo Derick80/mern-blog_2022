@@ -1,9 +1,8 @@
-import { Container, Divider, Grid, Typography } from '@mui/material'
-import { Box } from '@mui/system'
 import { GetStaticProps } from 'next'
 import React from 'react'
-import PostCard from '../components/PostCard'
-import Sidebar from '../components/Sidebar'
+import LikeWidget from '../components/LikeWidget'
+import PostCard from '../components/post/PostCard'
+import Posts from '../components/post/Posts'
 import prisma from '../utils/prisma'
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -40,17 +39,17 @@ const Index = (props: Props) => {
 
   return (
 
-
-    <Container maxWidth="lg" >
-      <Grid container spacing={5} sx={{ mt: 3 }}>
+    <>
+      <div className="card_grid">
         {props.feed.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <Posts key={post.id} post={post} />
         ))}
 
-        <Sidebar />
 
-      </Grid></Container>
 
+      </div>
+
+    </>
   )
 }
 

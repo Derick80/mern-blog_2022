@@ -15,7 +15,7 @@ function UserAvatar({ url }: { url: string | null }) {
     if (url) downloadImage(url)
   }, [url])
 
-  async function downloadImage(path) {
+  async function downloadImage(path: string) {
     try {
       const { data, error } = await supabase.storage
         .from('images')
@@ -31,7 +31,8 @@ function UserAvatar({ url }: { url: string | null }) {
   }
 
   return avatarUrl ? (
-    <Avatar src={avatarUrl} alt='Avatar' sx={{ width: 56, height: 56 }} />
+    // eslint-disable-next-line @next/next/no-img-element
+    <img className="profile_image" src={avatarUrl} alt="avatar" />
   ) : (
     <div className='avatar no-image' />
   )
