@@ -1,4 +1,4 @@
-import React from 'react'
+1import React from 'react'
 import { GetServerSideProps } from 'next'
 import PostCard from '../../../components/post/PostCard'
 import { useSession, getSession } from 'next-auth/client'

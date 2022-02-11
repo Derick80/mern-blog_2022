@@ -24,7 +24,7 @@ async function publishPost(id: number): Promise<void> {
 }
 
 // get likes
-const getLikes = async () => {
+const getLikes = async (postId: number) => {
   const response = await fetch('http://localhost:8077/api/likes', {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },

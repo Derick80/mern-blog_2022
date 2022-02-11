@@ -12,7 +12,7 @@ export const getStaticProps: GetStaticProps = async () => {
     },
     include: {
       comments: true,
-      likes: true,
+
       author: {
         select: {
           name: true,

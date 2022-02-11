@@ -1,27 +1,32 @@
-import Typography from '@mui/material/Typography'
-import prisma from '../utils/prisma'
+
+
 import { useSession } from 'next-auth/client'
-import { Router } from 'next/router'
+
 import React, { useEffect, useState } from 'react'
 
-import { useQuery } from 'react-query'
-import { log } from 'console'
-import { getLikes } from '../hooks'
+
+import { calculateLikeCount, getLikes } from '../hooks'
+
 
 type Props = {
+    postId: number
     likes: Like[]
 }
 
-const LikeWidget = ({ likes }: Props) => {
-    const [somelikes, setSomelikes] = useState(getLikes())
+const LikeWidget = ({ postId }: Props) => {
+    const [somelikes, setSomelikes] = useState<Like[]>()
+    // const { id, likeType, userId } = somelikes
+    useEffect(() => {
+        getLikes(postId)
+        return
+    }, [postId, somelikes])
 
 
-
-
-
+    console.log("someLIkes", somelikes)
     return (
         <div className="stupid">
             My likes here
+            {calculateLikeCount}
         </div>
     )
 }

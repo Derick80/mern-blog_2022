@@ -48,7 +48,7 @@ const Posts = ({ post }: Props) => {
 
             <div className='card_footer'>
                 <ReactionBox />
-                <LikeBox postId={post.id} likes={likes} />
+                <LikeWidget postId={post.id} />
 
                 <div className="count_box">
 
